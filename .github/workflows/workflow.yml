@@ -25,10 +25,10 @@ jobs:
       uses: actions/cache@v4
       with:
         path: .nuget-cache
-        key: nuget-cache-${{ hashFiles('.nuget-cache/nuget.lock.json') }}
+        key: nuget-cache-${{ hashFiles('packages.lock.json') }}
         restore-keys: |
           nuget-cache-
     - name: Restore dependencies
-      run: dotnet restore --use-lock-file --packages .nuget-cache --lock-file-path .nuget-cache/nuget.lock.json
+      run: dotnet restore --use-lock-file --packages .nuget-cache
     - name: Build
       run: dotnet build --no-restore

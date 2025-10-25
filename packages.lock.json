@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net9.0-windows7.0": {
+      "DotMake.CommandLine": {
+        "type": "Direct",
+        "requested": "[2.8.2, )",
+        "resolved": "2.8.2",
+        "contentHash": "V0urUR+3T00L9kYsXNNcMWGpipjfiJXNWDjGpxB1b5wK6p6qm4G+Ve+3vQYMbPCeBjVM4PTqRqeyYk2u9EhEjQ==",
+        "dependencies": {
+          "System.CommandLine": "[2.0.0-rc.1.25451.107]"
+        }
+      },
+      "MinVer": {
+        "type": "Direct",
+        "requested": "[6.0.0, )",
+        "resolved": "6.0.0",
+        "contentHash": "+/SsmiySsXJlvQLCGBqaZKNVt3s/Y/HbAdwtop7Km2CnuZbaScoqkWJEBQ5Cy9ebkn6kCYKrHsXgwrFdTgcb3g=="
+      },
+      "Tomlyn": {
+        "type": "Direct",
+        "requested": "[0.19.0, )",
+        "resolved": "0.19.0",
+        "contentHash": "GlI2o8R8jbZIaE+YX6uA/VoAOH7zIxYeqxDm7jHW2hqUhuB+q19oKold35FkMuv8IZDoCqsTMolaBv2eBLBmrQ=="
+      },
+      "WixSharp.Core": {
+        "type": "Direct",
+        "requested": "[2.8.0, )",
+        "resolved": "2.8.0",
+        "contentHash": "ajxcII2lR7jT18ME9qmiJXKFJ/4RAM6wZx5qD0yD8rqCO/Z5KPXjEvie9pSNyOux9SqNM+kOQP3+ahfLUU5Bhw==",
+        "dependencies": {
+          "WixSharp.Msi.Core": "2.8.0",
+          "WixToolset.Dtf.WindowsInstaller": "4.0.4",
+          "WixToolset.Mba.Core": "4.0.4"
+        }
+      },
+      "System.CommandLine": {
+        "type": "Transitive",
+        "resolved": "2.0.0-rc.1.25451.107",
+        "contentHash": "j+0Yg2TZ5rwbGTRArdF9w993dGWCPRbD+lg3S0D6MLckrKQ3J70s52TlbxKlISsoXUP/X+e6uPocbkKjP3wSag=="
+      },
+      "WixSharp.Msi.Core": {
+        "type": "Transitive",
+        "resolved": "2.8.0",
+        "contentHash": "guKVJKZ4RFHFUFKlaaf0DGzPcI/8n5joJJ8bfvN3nX8jhgWQflFDqMjOp/96Wv8PIulqariTi2eoiuRefWRqMA=="
+      },
+      "WixToolset.Dtf.WindowsInstaller": {
+        "type": "Transitive",
+        "resolved": "4.0.4",
+        "contentHash": "UdwgCxyH2SZBKuUOb3ARTbIMqfqp77ShiOxmb/D98qNQjQqQS6lJXNKiVuySVs0gw9eY149T/5mA5aOh+detLg=="
+      },
+      "WixToolset.Mba.Core": {
+        "type": "Transitive",
+        "resolved": "4.0.4",
+        "contentHash": "yGnvUE6ffRDjCR1NHJLPzm0GNgrSRm8Vc9yAh68xjo7Ag93LXqRIzD8YoD+jm1dy0kQzuhBKSqfNh1+jgBanlg=="
+      }
+    }
+  }
+}
