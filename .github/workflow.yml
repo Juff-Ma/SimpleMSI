@@ -1,0 +1,34 @@
+# Build the Project
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-2025
+    env:
+      MINVERBUILDMETADATA: build.${{ github.run_id }}.${{ github.run_attempt}}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Cache nuget packages
+      id: cache-nuget
+      uses: actions/cache@v4
+      with:
+        path: .nuget-cache
+        key: nuget-cache-${{ hashFiles('.nuget-cache/nuget.lock.json') }}
+        restore-keys: |
+          nuget-cache-
+    - name: Restore dependencies
+      run: dotnet restore --use-lock-file --packages .nuget-cache --lock-file-path .nuget-cache/nuget.lock.json
+    - name: Build
+      run: dotnet build --no-restore
