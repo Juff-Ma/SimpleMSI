@@ -1,6 +1,6 @@
 # Build the Project
 
-name: .NET
+name: Build
 
 on:
   push:
