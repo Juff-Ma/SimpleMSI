@@ -41,11 +41,9 @@ jobs:
         name: app
         path: out/app/**
     - name: Pack nupkg
-      run: |
-        dotnet pack SimpleMSI.csproj -c Debug --no-build -o out/nupkg
-        $env:NUPKG_NAME = (Get-ChildItem -LiteralPath out/nupkg -File | Select-Object -First 1).Name
+      run: dotnet pack SimpleMSI.csproj -c Debug --no-build -o out/nupkg
     - name: Upload nuget packages
       uses: actions/upload-artifact@v4
       with:
         name: nuget
-        path: out/nupkg/${{ env.NUPKG_NAME }}
+        path: out/nupkg/*.nupkg
