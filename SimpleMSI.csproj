@@ -5,25 +5,70 @@
 		<TargetFramework>net9.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<RootNamespace>SimpleMSI</RootNamespace>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
 		<RestoreLockedMode Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</RestoreLockedMode>
+		<Deterministic Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</Deterministic>
 	</PropertyGroup>
 
+	<!--Package specific configuration-->
 	<PropertyGroup>
 		<MinVerTagPrefix>v</MinVerTagPrefix>
 		<MinVerMinimumMajorMinor>1.0</MinVerMinimumMajorMinor>
 		<MinVerDefaultPreReleaseIdentifiers>dev.0</MinVerDefaultPreReleaseIdentifiers>
+
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>simplemsi</ToolCommandName>
+
+		<Title>SimpleMSI</Title>
+		<Authors>Juff-Ma</Authors>
+		<Description>Simple config-based tool to build MSI packages.</Description>
+		<Copyright>Copyright (C) $([System.DateTime]::Now.Year.ToString()) $(Authors)</Copyright>
+		<RepositoryUrl>https://github.com/Juff-Ma/SimpleMSI</RepositoryUrl>
+		<PackageTags>MSI;WiX;WixSharp;publish;pack</PackageTags>
+		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
+	<!--Customize MinVer behaviour-->
 	<Target Name="CustomVersioning" AfterTargets="MinVer">
 		<PropertyGroup>
 		    <AssemblyVersion>$(MinVerMajor).$(MinVerMinor).0.0</AssemblyVersion>
 
 		    <GITHUB_RUN_NUMBER Condition="'$(GITHUB_RUN_NUMBER)' == ''">0</GITHUB_RUN_NUMBER>
 		    <FileVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).$(GITHUB_RUN_NUMBER)</FileVersion>
+		</PropertyGroup>
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<DebugType>embedded</DebugType>
+		<IncludeSymbols>true</IncludeSymbols>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<DebugType>none</DebugType>
+		<IncludeSymbols>false</IncludeSymbols>
+	</PropertyGroup>
+
+	<!--This is a hack to publish dotnet tools with windows only functionality-->
+	<!--Courtesy of: https://github.com/dotnet/sdk/issues/12055#issuecomment-2126355866-->
+	<Target Name="HackBeforePackToolValidation" BeforeTargets="_PackToolValidation">
+		<PropertyGroup>
+			<TargetPlatformIdentifier></TargetPlatformIdentifier>
+			<TargetPlatformMoniker></TargetPlatformMoniker>
+		</PropertyGroup>
+	</Target>
+	<Target Name="HackAfterPackToolValidation" AfterTargets="_PackToolValidation" BeforeTargets="PackTool">
+		<PropertyGroup>
+			<TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
 		</PropertyGroup>
 	</Target>
 
@@ -35,6 +80,10 @@
 		</PackageReference>
 		<PackageReference Include="Tomlyn" Version="0.19.0" />
 		<PackageReference Include="WixSharp.Core" Version="2.8.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="True" PackagePath="/" />
 	</ItemGroup>
 
 </Project>
