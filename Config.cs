@@ -23,8 +23,10 @@ public class Config : ITomlMetadataProvider
 
     [DataMember(IsRequired = true, Name = "general")]
     public GeneralConfig General { get; set; } = new();
-    public class GeneralConfig
+    public class GeneralConfig : ITomlMetadataProvider
     {
+        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+
         [DataMember(IsRequired = true, Name = "guid")]
         public string Guid { get; set; } = System.Guid.Empty.ToString();
 
@@ -32,7 +34,38 @@ public class Config : ITomlMetadataProvider
         public string Name { get; set; } = "";
 
         [DataMember(Name = "platform")]
-        public string Platform { get; set; } = "x64";
+        public string? Platform { get; set; }
+
+        [DataMember(Name = "version")]
+        public string? Version { get; set; }
+
+        [DataMember(Name = "schedule_reboot")]
+        public bool? Reboot { get; set; }
+
+        [DataMember(Name = "install_scope")]
+        public string? InstallScope { get; set; }
+
+        [DataMember(Name = "ui_mode")]
+        public string? UiMode { get; set; }
+
+        [DataMember(Name = "out_file")]
+        public string? OutFileName { get; set; }
+    }
+
+    [DataMember(Name = "metadata")]
+    public MetadataConfig? Metadata { get; set; }
+    public class MetadataConfig : ITomlMetadataProvider
+    {
+        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+
+        [DataMember(Name = "display_name")]
+        public string? DisplayName { get; set; }
+
+        [DataMember(Name = "description")]
+        public string? Description { get; set; }
+
+        [DataMember(Name = "license_file")]
+        public string? LicenseFilePath { get; set; }
     }
 
     public static Config? FromToml(string toml)

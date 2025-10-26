@@ -41,6 +41,61 @@ internal static class ConfigExtensions
             "x64" => Platform.x64,
             "arm32" => Platform.arm,
             "arm64" => Platform.arm64,
+
+            //default to x64
+            null => Platform.x64,
+            _ => null
+        };
+    }
+
+    /// <summary>
+    /// Gets <see cref="Config.GeneralConfig.Version"/> as a <see cref="Version"/> instance.
+    /// </summary>
+    /// <returns>The parsed <see cref="Version"/> or <c>null</c> if invalid</returns>
+    public static Version? GetVersion(this Config.GeneralConfig config)
+    {
+        bool result = Version.TryParse(config.Version, out var version);
+        return result ? version : new(1, 0);
+    }
+
+    /// <summary>
+    /// Determines the installation scope based on the configuration settings.
+    /// </summary>
+    /// <returns>An <see cref="InstallScope"/> value representing the installation scope.  Returns <see
+    /// cref="InstallScope.perMachine"/> if the scope is set to "machine" or is <see langword="null"/>.  Returns <see
+    /// cref="InstallScope.perUser"/> if the scope is set to "user".  Returns <see langword="null"/> for any other
+    /// value.</returns>
+    public static InstallScope? GetInstallScope(this Config.GeneralConfig config)
+    {
+        return config.InstallScope switch
+        {
+            "machine" => InstallScope.perMachine,
+            "user" => InstallScope.perUser,
+
+            //default to perMachine
+            null => InstallScope.perMachine,
+            _ => null
+        };
+    }
+
+    /// <summary>
+    /// Determines the Wix UI mode based on the specified configuration.
+    /// </summary>
+    /// <remarks>This method maps the UI mode string from the configuration to a predefined Wix UI mode. If
+    /// the UI mode is not specified or is invalid, it defaults to <see cref="WUI.WixUI_ProgressOnly"/>.</remarks>
+    /// <returns>A <see cref="WUI"/> value representing the corresponding Wix UI mode: <see cref="WUI.WixUI_ProgressOnly"/> for
+    /// "none" or a null value, <see cref="WUI.WixUI_Minimal"/> for "basic", <see cref="WUI.WixUI_InstallDir"/> for
+    /// "full", or <c>null</c> if the UI mode is unrecognized.</returns>
+    public static WUI? GetWixUIMode(this Config.GeneralConfig config)
+    {
+        return config.UiMode switch
+        {
+            "none" => WUI.WixUI_ProgressOnly,
+            "basic" => WUI.WixUI_Minimal,
+            "full" => WUI.WixUI_InstallDir,
+            
+            //default to none
+            null => WUI.WixUI_ProgressOnly,
             _ => null
         };
     }
