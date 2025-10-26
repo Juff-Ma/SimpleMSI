@@ -28,3 +28,17 @@ jobs:
       run: dotnet restore 
     - name: Build
       run: dotnet build --no-restore
+    - name: Publish
+      run: dotnet publish --no-build -o out/app
+    - name: Upload app artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app
+        path: out/app/**
+    - name: Pack nupkg
+      run: dotnet pack --no-build -o out/nupkg
+    - name: Upload nuget packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget
+        path: out/nupkg/*.nupkg
