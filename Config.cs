@@ -33,9 +33,6 @@ public class Config : ITomlMetadataProvider
 
         [DataMember(Name = "platform")]
         public string Platform { get; set; } = "x64";
-
-        [DataMember(Name = "output")]
-        public string Output { get; set; } = "";
     }
 
     public static Config? FromToml(string toml)

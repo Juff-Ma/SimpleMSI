@@ -1,6 +1,6 @@
 ﻿#region copyright
 /*
-    Program.cs is part of SimpleMSI.
+    PrintContext.cs is part of SimpleMSI.
     Copyright (C) 2025 Julian Rossbach
 
     This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -10,32 +10,40 @@
     You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
-using DotMake.CommandLine;
-using SimpleMSI;
 
-return await Cli.RunAsync<SimpleMsi>(args, new()
-{
-    EnableDefaultExceptionHandler = true,
-    Theme = CliTheme.NoColor,
-    EnablePosixBundling = true,
-    Output = Console.Out,
-    Error = Console.Error
-});
+namespace SimpleMSI;
 
-namespace SimpleMSI
+public struct PrintContext
 {
-    /// <summary>
-    /// Root command for SimpleMSI CLI.
-    /// </summary>
-    [CliCommand]
-    internal class SimpleMsi
+    public PrintContext() {}
+
+    public PrintContext(bool verbose, TextWriter? output, TextWriter error)
     {
-        public int Run(CliContext ctx)
+        IsVerbose = verbose;
+        Output = output;
+        Error = error;
+    }
+
+    public bool IsVerbose { get; set; }
+
+    public TextWriter? Output { get; set; }
+    public TextWriter? Error { get; set; }
+
+    public void OutLine(ReadOnlySpan<char> line)
+    {
+        Output?.WriteLine(line);
+    }
+
+    public void ErrLine(ReadOnlySpan<char> line)
+    {
+        Error?.WriteLine(line);
+    }
+
+    public void VerboseLine(ReadOnlySpan<char> line)
+    {
+        if (IsVerbose)
         {
-            ctx.ShowLogo();
-            ctx.WriteLine("\n");
-            ctx.ShowHelp();
-            return ExitCodes.InvalidArguments;
+            OutLine(line);
         }
     }
 }

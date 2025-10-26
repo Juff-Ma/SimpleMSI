@@ -44,4 +44,9 @@ internal static class CliContextExtensions
 
     public static Task WriteLineAsync(this CliContext ctx, ReadOnlyMemory<char> str, CancellationToken token = default)
         => ctx.Output.WriteLineAsync(str, token);
+
+    public static PrintContext ToPrintContext(this CliContext ctx, bool verbose = false)
+    {
+        return new PrintContext(verbose, ctx.Output, ctx.Error);
+    }
 }
