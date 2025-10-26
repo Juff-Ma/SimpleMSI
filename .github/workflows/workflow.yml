@@ -25,7 +25,7 @@ jobs:
         dotnet-version: 9.0.x
         cache: true
     - name: Restore dependencies
-      run: dotnet restore SimpleMSI.csproj -c Debug
+      run: dotnet restore SimpleMSI.csproj
     - name: Build
       run: dotnet build SimpleMSI.csproj -c Debug --no-restore
     - name: Publish
