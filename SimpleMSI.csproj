@@ -60,13 +60,11 @@ You should have received a copy of the GNU Affero General Public License along w
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<DebugType>embedded</DebugType>
-		<IncludeSymbols>true</IncludeSymbols>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<DebugType>none</DebugType>
-		<IncludeSymbols>false</IncludeSymbols>
 	</PropertyGroup>
 
 	<!--This is a hack to publish dotnet tools with windows only functionality-->
