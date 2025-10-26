@@ -25,6 +25,20 @@ jobs:
         dotnet-version: 9.0.x
         cache: true
     - name: Restore dependencies
-      run: dotnet restore 
+      run: dotnet restore SimpleMSI.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build SimpleMSI.csproj --no-restore
+    - name: Publish
+      run: dotnet publish SimpleMSI.csproj --no-build -o out/app
+    - name: Upload app artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app
+        path: out/app/**
+    - name: Pack nupkg
+      run: dotnet pack SimpleMSI.csproj --no-build -o out/nupkg
+    - name: Upload nuget packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget
+        path: out/nupkg/*.nupkg
