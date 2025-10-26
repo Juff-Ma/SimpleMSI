@@ -3,7 +3,7 @@ extensions: .cs .cpp .h
 #region copyright
 /*
 	%FileName% is part of SimpleMSI.
-	Copyright (C) %CurrentYear% Juff-Ma
+	Copyright (C) %CurrentYear% Julian Rossbach
 
 	This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -15,7 +15,7 @@ extensions: .cs .cpp .h
 extensions:  .xml .config .xsd .csproj
 <!--
 SimpleMSI - MSI creation tool.
-Copyright (C) %CurrentYear% Juff-Ma
+Copyright (C) %CurrentYear% Julian Rossbach
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

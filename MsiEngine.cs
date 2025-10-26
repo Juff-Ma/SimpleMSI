@@ -1,6 +1,6 @@
 ﻿#region copyright
 /*
-	ExitCodes.cs is part of SimpleMSI.
+	MsiEngine.cs is part of SimpleMSI.
 	Copyright (C) 2025 Julian Rossbach
 
 	This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -12,18 +12,6 @@
 #endregion
 namespace SimpleMSI;
 
-/// <summary>
-/// Exit codes used by the application.
-/// </summary>
-internal static class ExitCodes
+public class MsiEngine
 {
-    /// <summary>
-    /// Indicates that the operation was successful and everything went smoothly.
-    /// </summary>
-    public const int Success = 0;
-
-    /// <summary>
-    /// Wrong arguments were provided or required arguments are missing.
-    /// </summary>
-    public const int InvalidArguments = 1;
 }

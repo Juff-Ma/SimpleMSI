@@ -1,6 +1,6 @@
 ﻿#region copyright
 /*
-	ExitCodes.cs is part of SimpleMSI.
+	ConfigExtensions.cs is part of SimpleMSI.
 	Copyright (C) 2025 Julian Rossbach
 
 	This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -10,20 +10,27 @@
 	You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
+using WixSharp;
+
 namespace SimpleMSI;
 
-/// <summary>
-/// Exit codes used by the application.
-/// </summary>
-internal static class ExitCodes
+internal static class ConfigExtensions
 {
-    /// <summary>
-    /// Indicates that the operation was successful and everything went smoothly.
-    /// </summary>
-    public const int Success = 0;
+    public static Guid? GetGuid(this Config.GeneralConfig config)
+    {
+        bool result = Guid.TryParse(config.Guid, out var guid);
+        return result ? guid : null;
+    }
 
-    /// <summary>
-    /// Wrong arguments were provided or required arguments are missing.
-    /// </summary>
-    public const int InvalidArguments = 1;
+    public static Platform? GetWixPlatform(this Config.GeneralConfig config)
+    {
+        return config.Platform switch
+        {
+            "x86" => Platform.x86,
+            "x64" => Platform.x64,
+            "arm32" => Platform.arm,
+            "arm64" => Platform.arm64,
+            _ => null
+        };
+    }
 }
