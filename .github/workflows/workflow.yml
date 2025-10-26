@@ -14,20 +14,15 @@ jobs:
     runs-on: windows-2025
     env:
       MINVERBUILDMETADATA: build.${{ github.run_id }}.${{ github.run_attempt}}
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Cache nuget packages
-      id: cache-nuget
-      uses: actions/cache@v4
-      with:
-        path: .nuget-cache
-        key: nuget-cache-${{ hashFiles('packages.lock.json') }}
-        restore-keys: |
-          nuget-cache-
+        cache: true
     - name: Restore dependencies
       run: dotnet restore --use-lock-file --packages .nuget-cache
     - name: Build
