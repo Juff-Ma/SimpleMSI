@@ -131,6 +131,80 @@ public class Config : ITomlMetadataProvider
         public bool? HideProgramEntry { get; set; }
     }
 
+    [DataMember(Name = "install")]
+    public InstallationConfig? Installation { get; set; }
+    public class InstallationConfig : ITomlMetadataProvider
+    {
+        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+
+        /// <summary>
+        /// Target installation directory. May contain environment variables like %ProgramFiles% or %LocalAppData%.
+        /// </summary>
+        [DataMember(Name = "install_dir")]
+        public string? Destination { get; set; }
+
+        /// <summary>
+        /// Single files to be included in the installation.
+        /// </summary>
+        [DataMember(Name = "source_files")]
+        public IList<string> Files { get; } = [];
+
+        /// <summary>
+        /// Directories to be included in the installation. Must contain a wildcard in the form of <c>*.*</c> as the filename/>
+        /// </summary>
+        [DataMember(Name = "source_dirs")]
+        public IList<string> Dirs { get; } = [];
+
+        [DataMember(Name = "source_dirs_are_recursive")]
+        public bool? DirsRecursive { get; set; }
+
+        [DataMember(Name = "env_vars")]
+        public IList<EnvVarConfig> EnvironmentVariables { get; } = [];
+        public class EnvVarConfig : ITomlMetadataProvider
+        {
+            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+
+            [DataMember(IsRequired = true, Name = "name")]
+            public string Name { get; set; } = "";
+
+            /// <summary>
+            /// Value to set the environment variable to. '@' gets replaced with the installation directory.
+            /// </summary>
+            [DataMember(IsRequired = true, Name = "value")]
+            public string Value { get; set; } = "";
+
+            /// <summary>
+            /// May be "all", "prefix" or "suffix". Defaults to "all". "suffix" is commonly used for PATH modifications.
+            /// </summary>
+            [DataMember(Name = "part")]
+            public string? Part { get; set; }
+        }
+
+        [DataMember(Name = "shortcuts")]
+        public IList<ShortcutConfig> Shortcuts { get; } = [];
+        public class ShortcutConfig : ITomlMetadataProvider
+        {
+            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+
+            /// <summary>
+            /// Files are searched by the end of their filename. So "app.exe" would match "myapp.exe".
+            /// </summary>
+            [DataMember(IsRequired = true, Name = "target")]
+            public string TargetFile { get; set; } = "";
+            /// <summary>
+            /// May include values like %Desktop%, defaults to the Program Menu.
+            /// </summary>
+            [DataMember(Name = "location")]
+            public string? Location { get; set; }
+
+            /// <summary>
+            /// Name of the shortcut. Defaults to the App's name.
+            /// </summary>
+            [DataMember(Name = "name")]
+            public string? Name { get; set; }
+        }
+    }
+
     public static Config? FromToml(string toml)
     {
         bool success = Toml.TryToModel(toml, out Config? config, out _);

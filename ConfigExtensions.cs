@@ -86,7 +86,7 @@ internal static class ConfigExtensions
     /// <returns>A <see cref="WUI"/> value representing the corresponding Wix UI mode: <see cref="WUI.WixUI_ProgressOnly"/> for
     /// "none" or a null value, <see cref="WUI.WixUI_Minimal"/> for "basic", <see cref="WUI.WixUI_InstallDir"/> for
     /// "full", or <c>null</c> if the UI mode is unrecognized.</returns>
-    public static WUI? GetWixUIMode(this Config.GeneralConfig config)
+    public static WUI? GetWixUiMode(this Config.GeneralConfig config)
     {
         return config.UiMode switch
         {
@@ -96,6 +96,27 @@ internal static class ConfigExtensions
             
             //default to none
             null => WUI.WixUI_ProgressOnly,
+            _ => null
+        };
+    }
+
+    /// <summary>
+    /// Determines the environment variable part from the configuration.
+    /// </summary>
+    /// <returns>
+    /// An <see cref="EnvVarPart"/> value representing the environment variable part: <see cref="EnvVarPart.all"/> for "all" or a null value,
+    /// A <see cref="EnvVarPart.first"/> for "prefix", <see cref="EnvVarPart.last"/> for "suffix", or <c>null</c> if the part is unrecognized.
+    /// </returns>
+    public static EnvVarPart? GetEnvVarPart(this Config.InstallationConfig.EnvVarConfig config)
+    {
+        return config.Part switch
+        {
+            "all" => EnvVarPart.all,
+            "prefix" => EnvVarPart.first,
+            "suffix" => EnvVarPart.last,
+
+            //default to all
+            null => EnvVarPart.all,
             _ => null
         };
     }

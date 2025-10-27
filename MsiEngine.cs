@@ -12,6 +12,8 @@
 #endregion
 
 using WixSharp;
+using WixSharp.CommonTasks;
+using WixToolset.Mba.Core;
 using File = System.IO.File;
 
 namespace SimpleMSI;
@@ -29,9 +31,40 @@ public class MsiEngine(PrintContext print = default)
         {
             throw new ArgumentException("Name may not be empty or contain whitespaces", nameof(config));
         }
-        
+
+        var scope = config.General.GetInstallScope() ??
+                    throw new ArgumentException("Install Scope is not valid", nameof(config));
+
+        print.VerboseLine("Configuring msi files...");
+
+        if (config.Installation?.Destination is var installDestination && string.IsNullOrWhiteSpace(installDestination))
+        {
+            switch (scope)
+            {
+                case InstallScope.perMachine: installDestination = "%ProgramFiles%\\"; break;
+                case InstallScope.perUser: installDestination = "%LocalAppData%\\"; break;
+                default: throw new InvalidOperationException("What the hell just happened"); //should never happen
+            }
+
+            if (!string.IsNullOrWhiteSpace(config.Metadata?.Manufacturer))
+            {
+                installDestination += config.Metadata.Manufacturer + '\\';
+            }
+
+            installDestination += config.General.Name;
+        }
+
+        var installFiles = (config.Installation?.Files ?? []).Select(f => (new WixSharp.File(f)) as WixEntity);
+        var installDirs = (config.Installation?.Dirs ?? []).Select(d =>
+        {
+            bool recursive = config.Installation?.DirsRecursive != false;
+            return (recursive ? new Files(d) as WixEntity : new DirFiles(d));
+        });
+
+        InstallDir installDir = new(installDestination, installFiles.Concat(installDirs).ToArray());
+
         print.VerboseLine("Configuring msi...");
-        _msi = new(config.Metadata?.DisplayName ?? config.General.Name)
+        _msi = new(config.Metadata?.DisplayName ?? config.General.Name, installDir)
         {
             GUID = config.General.GetGuid() ??
                        throw new ArgumentException("Main GUID is not valid", nameof(config)),
@@ -39,14 +72,43 @@ public class MsiEngine(PrintContext print = default)
                            throw new ArgumentException("Platform is not valid", nameof(config)),
             Version = config.General.GetVersion() ??
                           throw new ArgumentException("Version is not valid", nameof(config)),
-            Scope = config.General.GetInstallScope() ?? 
-                    throw new ArgumentException("Install Scope is not valid", nameof(config)),
-            UI = config.General.GetWixUIMode() ?? 
+            Scope = scope,
+            UI = config.General.GetWixUiMode() ?? 
                  throw new ArgumentException("UI Mode is not valid", nameof(config)),
 
             Description = config.Metadata?.Description ?? string.Empty,
             MajorUpgradeStrategy = MajorUpgradeStrategy.Default,
         };
+
+        _msi.ResolveWildCards();
+
+        foreach (var shortcut in config.Installation?.Shortcuts ?? [])
+        {
+            var files = _msi.FindFile(f => f.Name.EndsWith(shortcut.TargetFile));
+            if (files.Length <= 0)
+            {
+                throw new FileNotFoundException("Shortcut file not found", shortcut.TargetFile);
+            }
+
+            if (files.Length > 1)
+            {
+                print.OutLine($"Warning: {files.Length} files found for shortcut for {shortcut.TargetFile}, using first hit");
+            }
+
+            files[0].AddShortcut(new(shortcut.Name ?? _msi.Name, shortcut.Location ?? "ProgramMenuFolder"));
+        }
+
+        foreach (var @var in config.Installation?.EnvironmentVariables ?? [])
+        {
+            var part = @var.GetEnvVarPart() ?? throw new ArgumentException($"Env var part for variable {@var.Name} not valid", nameof(config));
+
+            _msi.Add(
+                new EnvironmentVariable(@var.Name, @var.Value.Replace("@", "[INSTALLDIR]"))
+                {
+                    Part = part
+                }
+            );
+        }
 
         if (config.General.Reboot == true)
         {
@@ -120,5 +182,32 @@ public class MsiEngine(PrintContext print = default)
         }
 
         _msi.OutFileName = file;
+    }
+
+    public void BuildMsi()
+    {
+        if (_msi is null)
+        {
+            throw new InvalidOperationException("MSI not configured");
+        }
+        _msi.BuildMsi();
+    }
+
+    public void BuildMsiCmd()
+    {
+        if (_msi is null)
+        {
+            throw new InvalidOperationException("MSI not configured");
+        }
+        _msi.BuildMsiCmd();
+    }
+
+    public void BuildWxs()
+    {
+        if (_msi is null)
+        {
+            throw new InvalidOperationException("MSI not configured");
+        }
+        _msi.BuildWxs();
     }
 }
