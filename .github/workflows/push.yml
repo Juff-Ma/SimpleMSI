@@ -1,22 +1,29 @@
 # Build the Project
 
-name: Build
+name: Build on push
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_call:
+    inputs:
+      configuration:
+        required: false
+        type: string
+        default: "Debug"
 
 jobs:
   build:
-
+    name: Build app
     runs-on: windows-2025
     env:
       MINVERBUILDMETADATA: build.${{ github.run_id }}.${{ github.run_attempt}}
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
+      CONFIGURATION: ${{ github.event_name == 'workflow_call' && inputs.configuration || 'Debug' }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -25,23 +32,23 @@ jobs:
         fetch-tags: true
         filter: tree:0
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: 9.0.x
         cache: true
     - name: Restore dependencies
       run: dotnet restore SimpleMSI.csproj
     - name: Build
-      run: dotnet build SimpleMSI.csproj -c Debug --no-restore
+      run: dotnet build SimpleMSI.csproj -c $env:CONFIGURATION --no-restore
     - name: Publish
-      run: dotnet publish SimpleMSI.csproj -c Debug --no-build -o out/app
+      run: dotnet publish SimpleMSI.csproj -c $env:CONFIGURATION --no-build -o out/app
     - name: Upload app artifact
       uses: actions/upload-artifact@v4
       with:
         name: app
         path: out/app/**
     - name: Pack nupkg
-      run: dotnet pack SimpleMSI.csproj -c Debug --no-build -o out/nupkg
+      run: dotnet pack SimpleMSI.csproj -c $env:CONFIGURATION --no-build -o out/nupkg
     - name: Upload nuget packages
       uses: actions/upload-artifact@v4
       with:
