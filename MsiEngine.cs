@@ -12,6 +12,7 @@
 #endregion
 
 using WixSharp;
+using File = System.IO.File;
 
 namespace SimpleMSI;
 
@@ -44,7 +45,6 @@ public class MsiEngine(PrintContext print = default)
                  throw new ArgumentException("UI Mode is not valid", nameof(config)),
 
             Description = config.Metadata?.Description ?? string.Empty,
-            LicenceFile = config.Metadata?.LicenseFilePath ?? string.Empty,
             MajorUpgradeStrategy = MajorUpgradeStrategy.Default,
         };
 
@@ -52,6 +52,46 @@ public class MsiEngine(PrintContext print = default)
         {
             _msi.ScheduleReboot = new();
         }
+
+        if (config.Metadata?.LicenseFilePath is var license && license is not null && !Path.Exists(license))
+        {
+            throw new FileNotFoundException("License file not found", license);
+        }
+        _msi.LicenceFile = license ?? string.Empty;
+
+        if (config.Metadata?.BannerImagePath is var banner && banner is not null && !Path.Exists(banner))
+        {
+            throw new FileNotFoundException("Banner image not found", banner);
+        }
+        _msi.BannerImage = banner ?? string.Empty;
+
+        if (config.Metadata?.DialogImagePath is var dialog && dialog is not null && !Path.Exists(dialog))
+        {
+            throw new FileNotFoundException("Dialog image not found", dialog);
+        }
+        _msi.BackgroundImage = dialog ?? string.Empty;
+
+        _msi.ControlPanelInfo = new()
+        {
+            InstallLocation = "[INSTALLDIR]",
+            Manufacturer = config.Metadata?.Manufacturer ?? config.General.Name,
+            Comments = config.Metadata?.Description,
+
+            HelpLink = config.Metadata?.HelpUrl,
+            UrlInfoAbout = config.Metadata?.AboutUrl,
+            UrlUpdateInfo = config.Metadata?.UpdateUrl,
+
+            NoModify = config.Metadata?.ForbidModify,
+            NoRepair = config.Metadata?.ForbidRepair,
+            NoRemove = config.Metadata?.ForbidUninstall,
+            SystemComponent = config.Metadata?.HideProgramEntry,
+        };
+
+        if (config.Metadata?.ProductIconPath is var icon && icon is not null && !Path.Exists(icon))
+        {
+            throw new FileNotFoundException("Product icon not found", icon);
+        }
+        _msi.ControlPanelInfo.ProductIcon = icon;
 
         var outFile = config.General.OutFileName;
         if (string.IsNullOrWhiteSpace(outFile))
