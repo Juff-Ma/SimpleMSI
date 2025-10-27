@@ -2,6 +2,11 @@
 
 name: Push to GH registry on tag
 
+permissions:
+  contents: read
+  actions: read
+  packages: write
+
 on:
   push:
     tags:
