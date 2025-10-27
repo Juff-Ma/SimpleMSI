@@ -25,7 +25,7 @@ internal static class CliContextExtensions
              _\ \ | | | | | | |_) | |  __/ /\/\ \_\ \/\/ /_
              \__/_|_| |_| |_| .__/|_|\___\/    \/\__/\____/
                             |_|                              
-         (C) {DateTime.Now.Year} SimpleMSI ======================================
+         (C) {DateTime.Now.Year} SimpleMSI ============ licensed under the AGPL3+
          """;
 
     public static void ShowLogo(this CliContext ctx)

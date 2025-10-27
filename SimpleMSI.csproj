@@ -65,6 +65,7 @@ You should have received a copy of the GNU Affero General Public License along w
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<DebugType>none</DebugType>
+
 		<PublishSelfContained>true</PublishSelfContained>
 		<PublishReadyToRun>true</PublishReadyToRun>
 	</PropertyGroup>
