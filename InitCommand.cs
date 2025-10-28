@@ -17,24 +17,21 @@ using DotMake.CommandLine;
 namespace SimpleMSI;
 
 [CliCommand(Description = "Initialize new config file")]
-public class InitCommand : ICliRunAsyncWithContextAndReturn
+internal class InitCommand : CommonCommand
 {
     private static readonly Assembly assembly = typeof(InitCommand).Assembly;
 
-    public async Task<int> RunAsync(CliContext cliContext)
+    public override async Task<int> RunAsync(CliContext cliContext)
     {
-        var root = cliContext.Result.Bind<SimpleMsiCli>() 
-                   ?? throw new ArgumentNullException("CLI root has been null");
-
-        if (!root.NoLogo)
+        if (PrintLogo)
         {
             cliContext.ShowLogo();
             await cliContext.Output.WriteLineAsync();
         }
 
-        var print = cliContext.ToPrintContext(root.Verbose);
+        var print = cliContext.ToPrintContext(Verbose);
 
-        print.VerboseLine("Loadingtemplate config...");
+        print.VerboseLine("Loading template config...");
 
         var resource = assembly.GetManifestResourceStream(typeof(InitCommand), "Template.msi.toml")
                                 ?? throw new FileNotFoundException("Embedded template not found");

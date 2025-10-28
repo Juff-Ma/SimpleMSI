@@ -146,19 +146,19 @@ public class Config : ITomlMetadataProvider
         /// Single files to be included in the installation.
         /// </summary>
         [DataMember(Name = "source_files")]
-        public IList<string> Files { get; } = [];
+        public List<string> Files { get; } = [];
 
         /// <summary>
         /// Directories to be included in the installation. Must contain a wildcard in the form of <c>*.*</c> as the filename/>
         /// </summary>
         [DataMember(Name = "source_dirs")]
-        public IList<string> Dirs { get; } = [];
+        public List<string> Dirs { get; } = [];
 
         [DataMember(Name = "source_dirs_are_recursive")]
         public bool? DirsRecursive { get; set; }
 
         [DataMember(Name = "env_vars")]
-        public IList<EnvVarConfig> EnvironmentVariables { get; } = [];
+        public List<EnvVarConfig> EnvironmentVariables { get; } = [];
         public class EnvVarConfig : ITomlMetadataProvider
         {
             public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
@@ -180,7 +180,7 @@ public class Config : ITomlMetadataProvider
         }
 
         [DataMember(Name = "shortcuts")]
-        public IList<ShortcutConfig> Shortcuts { get; } = [];
+        public List<ShortcutConfig> Shortcuts { get; } = [];
         public class ShortcutConfig : ITomlMetadataProvider
         {
             public TomlPropertiesMetadata? PropertiesMetadata { get; set; }

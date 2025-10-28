@@ -37,9 +37,6 @@ namespace SimpleMSI
         [CliOption(Name = "nologo", Recursive = true, Description = "Do not display logo and copyright")]
         public bool NoLogo { get; set; }
 
-        [CliOption(Recursive = true, Description = "Print extended output")]
-        public bool Verbose { get; set; }
-
         public int Run(CliContext cliContext)
         {
             if (!NoLogo)

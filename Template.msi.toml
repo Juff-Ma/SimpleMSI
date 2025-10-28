@@ -44,7 +44,7 @@ value = "@"
 # Where to add the value.
 # "all" replaces the variable, "prefix" adds the value to the start, "suffix" adds the value to the end.
 # Use "suffix" when modifying PATH to ensure other important paths are not overridden.
-action = "suffix"
+part = "suffix"
 
 
 # This defines shortcuts to create during installation.

@@ -1,6 +1,6 @@
 ﻿#region copyright
 /*
-BuildCommand.cs is part of SimpleMSI.
+CommonCommand.cs is part of SimpleMSI.
 Copyright (C) 2025 Julian Rossbach
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -14,11 +14,14 @@ using DotMake.CommandLine;
 
 namespace SimpleMSI;
 
-[CliCommand(Description = "Build MSI from config file")]
-internal class BuildCommand : ICliRunAsyncWithContextAndReturn
+internal abstract class CommonCommand : ICliRunAsyncWithContextAndReturn
 {
-    public Task<int> RunAsync(CliContext cliContext)
-    {
-        throw new NotImplementedException();
-    }
+    public abstract Task<int> RunAsync(CliContext cliContext);
+
+    // ReSharper disable once MemberCanBePrivate.Global
+    public SimpleMsiCli Root { get; set; } = null!;
+    protected bool PrintLogo => !Root.NoLogo;
+
+    [CliOption(Description = "Print extended output")]
+    public bool Verbose { get; set; }
 }
