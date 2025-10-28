@@ -10,10 +10,11 @@
     You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
+
 using DotMake.CommandLine;
 using SimpleMSI;
 
-return await Cli.RunAsync<SimpleMsi>(args, new()
+return await Cli.RunAsync<SimpleMsiCli>(args, new()
 {
     EnableDefaultExceptionHandler = true,
     Theme = CliTheme.NoColor,
@@ -27,14 +28,25 @@ namespace SimpleMSI
     /// <summary>
     /// Root command for SimpleMSI CLI.
     /// </summary>
-    [CliCommand]
-    internal class SimpleMsi
+    [CliCommand(Description = "SimpleMSI Windows Installer creation tool.",
+        Children = [
+            typeof(InitCommand),
+            typeof(BuildCommand)
+        ])]
+    internal class SimpleMsiCli : ICliRunWithContextAndReturn
     {
-        public int Run(CliContext ctx)
+        [CliOption(Name = "nologo", Recursive = true, Description = "Do not display logo and copyright")]
+        public bool NoLogo { get; set; }
+
+        public int Run(CliContext cliContext)
         {
-            ctx.ShowLogo();
-            ctx.WriteLine("\n");
-            ctx.ShowHelp();
+            if (!NoLogo)
+            {
+                cliContext.ShowLogo();
+                cliContext.WriteLine("\n");
+            }
+
+            cliContext.ShowHelp();
             return ExitCodes.InvalidArguments;
         }
     }
