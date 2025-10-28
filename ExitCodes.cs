@@ -18,11 +18,6 @@ namespace SimpleMSI;
 internal static class ExitCodes
 {
     /// <summary>
-    /// Unknown error occurred.
-    /// </summary>
-    public const int UnknownError = -1;
-
-    /// <summary>
     /// Indicates that the operation was successful and everything went smoothly.
     /// </summary>
     public const int Success = 0;

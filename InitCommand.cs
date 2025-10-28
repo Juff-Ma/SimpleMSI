@@ -10,6 +10,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
+
+using System.Reflection;
 using DotMake.CommandLine;
 
 namespace SimpleMSI;
@@ -17,8 +19,32 @@ namespace SimpleMSI;
 [CliCommand(Description = "Initialize new config file")]
 public class InitCommand : ICliRunAsyncWithContextAndReturn
 {
-    public Task<int> RunAsync(CliContext cliContext)
+    private static readonly Assembly assembly = typeof(InitCommand).Assembly;
+
+    public async Task<int> RunAsync(CliContext cliContext)
     {
-        throw new NotImplementedException();
+        var root = cliContext.Result.Bind<SimpleMsiCli>() 
+                   ?? throw new ArgumentNullException("CLI root has been null");
+
+        if (!root.NoLogo)
+        {
+            cliContext.ShowLogo();
+            await cliContext.Output.WriteLineAsync();
+        }
+
+        var print = cliContext.ToPrintContext(root.Verbose);
+
+        print.VerboseLine("Loadingtemplate config...");
+
+        var resource = assembly.GetManifestResourceStream(typeof(InitCommand), "Template.msi.toml")
+                                ?? throw new FileNotFoundException("Embedded template not found");
+
+        using StreamReader reader = new(resource);
+        var template = await reader.ReadToEndAsync();
+
+        var config = Config.FromToml(template)
+                        ?? throw new InvalidDataException("Failed to parse embedded template");
+
+        return ExitCodes.Success;
     }
 }

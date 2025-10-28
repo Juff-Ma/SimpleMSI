@@ -1,0 +1,58 @@
+# General configuration
+[general]
+
+# This is the GUID that uniquely identifies your app. This needs to be present and should not be changed once your app is published.
+# You can generate a new GUID using various online tools or development environments.
+# If it is changed after publishing, it may cause issues with updates and installations.
+guid = "00000000-0000-0000-0000-000000000000"
+
+# This is the name that identifies your app.
+# Note: if you define meta.display_name, this will almost never be used.
+name = "Template"
+
+# The platform your app is built for. Options are "x86", "x64", "arm32" and "arm64".
+platform = "x64"
+
+# The version of your app. This needs to contain at least to components (e.g. "1.0") and max four components.
+# This version may not contain any additional labels like "beta" or "alpha".
+version = "1.0.0"
+
+# The installation scope of your app. Options are "user" and "machine".
+# This also defines whether admin rights are required to install the app.
+install_scope = "machine"
+
+
+# Installation information
+[install]
+
+# Installation source directories.
+# These are the directories where your application files to be packaged are taken from.
+source_dirs = ["./app/"]
+
+
+# Environment variables to set during installation.
+# Note: This is a TOML array of tables, so you can define multiple environment variables by adding more [[install.env_vars]] sections.
+[[install.env_vars]]
+
+# The name of the environment variable to set.
+name = "PATH"
+
+# The value to set the environment variable to.
+# "@" gets expanded to the installation directory of the app.
+value = "@"
+
+# Where to add the value.
+# "all" replaces the variable, "prefix" adds the value to the start, "suffix" adds the value to the end.
+# Use "suffix" when modifying PATH to ensure other important paths are not overridden.
+action = "suffix"
+
+
+# This defines shortcuts to create during installation.
+# Note: You may add multiple shortcuts by adding more [[install.shortcuts]] sections. 
+#       For example to place one on the Desktop and one in the Start Menu.
+[[install.shortcuts]]
+
+# The target of the shortcut. Replace this with your app's main executable.
+# Note: This matches all files regardless of subdirectory, so be specific to avoid conflicts.
+#       This matches back to front, so "app.exe" would match "myapp.exe".
+target = "app.exe"
