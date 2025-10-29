@@ -54,13 +54,6 @@
         "resolved": "4.0.4",
         "contentHash": "yGnvUE6ffRDjCR1NHJLPzm0GNgrSRm8Vc9yAh68xjo7Ag93LXqRIzD8YoD+jm1dy0kQzuhBKSqfNh1+jgBanlg=="
       }
-    },
-    "net9.0-windows7.0/win-x64": {
-      "WixToolset.Mba.Core": {
-        "type": "Transitive",
-        "resolved": "4.0.4",
-        "contentHash": "yGnvUE6ffRDjCR1NHJLPzm0GNgrSRm8Vc9yAh68xjo7Ag93LXqRIzD8YoD+jm1dy0kQzuhBKSqfNh1+jgBanlg=="
-      }
     }
   }
 }
