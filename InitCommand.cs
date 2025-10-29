@@ -11,7 +11,6 @@ You should have received a copy of the GNU Affero General Public License along w
 */
 #endregion
 
-using System.Reflection;
 using DotMake.CommandLine;
 
 namespace SimpleMSI;
@@ -19,9 +18,6 @@ namespace SimpleMSI;
 [CliCommand(Description = "Initialize new config file")]
 internal class InitCommand : CommonCommand
 {
-    private static readonly Assembly assembly = typeof(Marker).Assembly;
-    private static readonly int assemblyMajor = assembly.GetName().Version?.Major ?? 1;
-
     [CliArgument(ValidationPattern = Config.GeneralConfig.NameValidationRegex,
         Description = "Application identifying name")] 
     public string AppName { get; set; } = null!;
@@ -45,7 +41,7 @@ internal class InitCommand : CommonCommand
 
         print.VerboseLine("Loading template config...");
 
-        var resource = assembly.GetManifestResourceStream(typeof(InitCommand), "Template.msi.toml")
+        var resource = SimpleMsiCli.Assembly.GetManifestResourceStream(typeof(InitCommand), "Template.msi.toml")
                                 ?? throw new FileNotFoundException("Embedded template not found");
 
         using StreamReader reader = new(resource);
@@ -97,11 +93,11 @@ internal class InitCommand : CommonCommand
 
         if (OutputFile?.EndsWith(".msi.toml") == false)
         {
-            print.OutLine($"Warning: Config file should have the extension '.msi.toml' or '.v{assemblyMajor}.msi.toml' for SimpleMSI to locate it automatically");
+            print.OutLine($"Warning: Config file should have the extension '.msi.toml' or '.v{SimpleMsiCli.AssemblyMajor}.msi.toml' for SimpleMSI to locate it automatically");
         }
 
         var outputPath = OutputFile ??
-                         $"{AppName}.v{assemblyMajor}.msi.toml";
+                         $"{AppName}.v{SimpleMsiCli.AssemblyMajor}.msi.toml";
 
         print.OutLine($"Writing config to {outputPath}...");
 

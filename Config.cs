@@ -218,12 +218,6 @@ public class Config : ITomlMetadataProvider
         return success ? config : null;
     }
 
-    public static async Task<Config?> FromFileAsync(string path, CancellationToken token = default)
-    {
-        string toml = await File.ReadAllTextAsync(path, token);
-        return FromToml(toml);
-    }
-
     public string ToToml()
     {
         return Toml.FromModel(this);

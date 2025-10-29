@@ -10,6 +10,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
+
+using System.Reflection;
 using DotMake.CommandLine;
 using SimpleMSI;
 
@@ -34,6 +36,9 @@ namespace SimpleMSI
         ])]
     internal class SimpleMsiCli : ICliRunWithContextAndReturn
     {
+        public static readonly Assembly Assembly = typeof(Marker).Assembly;
+        public static readonly int AssemblyMajor = Assembly.GetName().Version?.Major ?? 1;
+
         [CliOption(Name = "nologo", Recursive = true, Description = "Do not display logo and copyright")]
         public bool NoLogo { get; set; }
 
