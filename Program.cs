@@ -49,4 +49,6 @@ namespace SimpleMSI
             return ExitCodes.InvalidArguments;
         }
     }
+
+    internal sealed class Marker;
 }

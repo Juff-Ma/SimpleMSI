@@ -27,7 +27,7 @@ install_scope = "machine"
 
 # Installation source directories.
 # These are the directories where your application files to be packaged are taken from.
-source_dirs = ["./app/"]
+source_dirs = [".\\app\\*.*"]
 
 
 # Environment variables to set during installation.

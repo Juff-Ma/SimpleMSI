@@ -22,6 +22,26 @@ internal abstract class CommonCommand : ICliRunAsyncWithContextAndReturn
     public SimpleMsiCli Root { get; set; } = null!;
     protected bool PrintLogo => !Root.NoLogo;
 
+    [CliOption(Description = "Version of the app", Required = false)]
+    public Version? Version { get; set; }
+
+    [CliOption(Description = "Platform the installer should run on", Required = false,
+        AllowedValues = [
+            "x86",
+            "x64",
+            "arm32",
+            "arm64"
+        ])]
+    public string? Platform { get; set; }
+
+    [CliOption(Description = "Output file path", Required = false,
+        ValidationRules = CliValidationRules.LegalPath, Alias = "o")]
+    public string? OutputFile { get; set; }
+
+    [CliOption(Description = "Source directories to include files from, can be provided multiple times",
+        Required = false, Name = "dir")]
+    public List<string> SourceDirectories { get; set; } = [];
+
     [CliOption(Description = "Print extended output")]
     public bool Verbose { get; set; }
 }

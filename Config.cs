@@ -32,6 +32,8 @@ public class Config : ITomlMetadataProvider
         [DataMember(IsRequired = true, Name = "name")]
         public string Name { get; set; } = "";
 
+        public const string NameValidationRegex = "^[A-Za-z0-9]+$";
+
         [DataMember(Name = "platform")]
         public string? Platform { get; set; }
 

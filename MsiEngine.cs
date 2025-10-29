@@ -10,10 +10,10 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
+
+using System.Text.RegularExpressions;
 using WixSharp;
 using WixSharp.CommonTasks;
-using WixToolset.Mba.Core;
-using File = System.IO.File;
 
 namespace SimpleMSI;
 
@@ -26,7 +26,8 @@ public class MsiEngine(PrintContext print = default)
 
     public void ConfigureMsi(Config config)
     {
-        if (config.General.Name.Contains(' ') || string.IsNullOrWhiteSpace(config.General.Name))
+        // Regex matches if the name contains only letters and numbers
+        if (!Regex.IsMatch(config.General.Name, Config.GeneralConfig.NameValidationRegex))
         {
             throw new ArgumentException("Name may not be empty or contain whitespaces", nameof(config));
         }
