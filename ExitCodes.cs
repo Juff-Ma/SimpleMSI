@@ -25,15 +25,15 @@ internal static class ExitCodes
     /// <summary>
     /// Wrong arguments were provided or required arguments are missing.
     /// </summary>
-    public const int InvalidArguments = 1;
+    public const int InvalidArguments = -1;
 
     /// <summary>
     /// Invalid configuration file or configuration data.
     /// </summary>
-    public const int InvalidConfig = 2;
+    public const int InvalidConfig = -2;
 
     /// <summary>
     /// File not found.
     /// </summary>
-    public const int FileNotFound = 3;
+    public const int FileNotFound = -3;
 }
