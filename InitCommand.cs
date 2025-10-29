@@ -82,6 +82,33 @@ internal class InitCommand : CommonCommand
             config.Installation!.Dirs.AddRange(SourceDirectories);
         }
 
+        if (SourceFiles.Count > 0)
+        {
+            config.Installation!.Files.Clear();
+            config.Installation!.Files.AddRange(SourceDirectories);
+        }
+
+        if (OutputFile is {} file &&
+            string.IsNullOrWhiteSpace(Path.GetFileName(file)))
+        {
+            print.ErrLine($"Error: Output path '{file}' must contain a file name");
+            return ExitCodes.InvalidArguments;
+        }
+
+        if (OutputFile?.EndsWith(".msi.toml") == false)
+        {
+            print.OutLine($"Warning: Config file should have the extension '.msi.toml' or '.v{assemblyMajor}.msi.toml' for SimpleMSI to locate it automatically");
+        }
+
+        var outputPath = OutputFile ??
+                         $"{AppName}.v{assemblyMajor}.msi.toml";
+
+        print.OutLine($"Writing config to {outputPath}...");
+
+        var outText = config.ToToml();
+
+        await File.WriteAllTextAsync(outputPath, outText);
+
         return ExitCodes.Success;
     }
 }

@@ -42,6 +42,10 @@ internal abstract class CommonCommand : ICliRunAsyncWithContextAndReturn
         Required = false, Name = "dir")]
     public List<string> SourceDirectories { get; set; } = [];
 
+    [CliOption(Description = "Source files include, can be provided multiple times",
+        Required = false, Name = "file")]
+    public List<string> SourceFiles { get; set; } = [];
+
     [CliOption(Description = "Print extended output")]
     public bool Verbose { get; set; }
 }

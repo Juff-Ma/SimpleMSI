@@ -18,12 +18,14 @@ namespace SimpleMSI;
 
 public class Config : ITomlMetadataProvider
 {
+    [IgnoreDataMember]
     public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
 
     [DataMember(IsRequired = true, Name = "general")]
     public GeneralConfig General { get; set; } = new();
     public class GeneralConfig : ITomlMetadataProvider
     {
+        [IgnoreDataMember]
         public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
 
         [DataMember(IsRequired = true, Name = "guid")]
@@ -63,6 +65,7 @@ public class Config : ITomlMetadataProvider
     public MetadataConfig? Metadata { get; set; }
     public class MetadataConfig : ITomlMetadataProvider
     {
+        [IgnoreDataMember]
         public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
 
         [DataMember(Name = "display_name")]
@@ -136,6 +139,7 @@ public class Config : ITomlMetadataProvider
     public InstallationConfig? Installation { get; set; }
     public class InstallationConfig : ITomlMetadataProvider
     {
+        [IgnoreDataMember]
         public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
 
         /// <summary>
@@ -163,6 +167,7 @@ public class Config : ITomlMetadataProvider
         public List<EnvVarConfig> EnvironmentVariables { get; } = [];
         public class EnvVarConfig : ITomlMetadataProvider
         {
+            [IgnoreDataMember]
             public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
 
             [DataMember(IsRequired = true, Name = "name")]
@@ -185,6 +190,7 @@ public class Config : ITomlMetadataProvider
         public List<ShortcutConfig> Shortcuts { get; } = [];
         public class ShortcutConfig : ITomlMetadataProvider
         {
+            [IgnoreDataMember]
             public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
 
             /// <summary>

@@ -25,6 +25,10 @@ install_scope = "machine"
 # Installation information
 [install]
 
+# Installation source files.
+# These files will be directly packaged.
+source_files = []
+
 # Installation source directories.
 # These are the directories where your application files to be packaged are taken from.
 source_dirs = [".\\app\\*.*"]
