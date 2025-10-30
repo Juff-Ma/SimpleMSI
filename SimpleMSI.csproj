@@ -17,6 +17,7 @@ You should have received a copy of the GNU Affero General Public License along w
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RootNamespace>SimpleMSI</RootNamespace>
+		<RuntimeIdentifiers>any;win-x86;win-x64;win-arm64</RuntimeIdentifiers>
 	</PropertyGroup>
 
 	<PropertyGroup>

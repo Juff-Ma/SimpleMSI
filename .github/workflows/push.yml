@@ -38,17 +38,19 @@ jobs:
         cache: true
     - name: Restore dependencies
       run: dotnet restore SimpleMSI.csproj
-    - name: Build
-      run: dotnet build SimpleMSI.csproj -c $env:CONFIGURATION --no-restore
+    - name: Build for target win-x64
+      run: dotnet build SimpleMSI.csproj -c $env:CONFIGURATION --no-restore -r win-x64
     - name: Publish
-      run: dotnet publish SimpleMSI.csproj -c $env:CONFIGURATION --no-build -o out/app
+      run: dotnet publish SimpleMSI.csproj -c $env:CONFIGURATION --no-build -r win-x64 -o out/app
     - name: Upload app artifact
       uses: actions/upload-artifact@v4
       with:
         name: app
         path: out/app/**
+    - name: Build for target any
+      run: dotnet build SimpleMSI.csproj -c $env:CONFIGURATION --no-restore -r any
     - name: Pack nupkg
-      run: dotnet pack SimpleMSI.csproj -c $env:CONFIGURATION --no-build -o out/nupkg
+      run: dotnet pack SimpleMSI.csproj -c $env:CONFIGURATION --no-build -r any -o out/nupkg
     - name: Upload nuget packages
       uses: actions/upload-artifact@v4
       with:
