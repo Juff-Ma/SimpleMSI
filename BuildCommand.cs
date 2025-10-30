@@ -10,6 +10,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
+
 using DotMake.CommandLine;
 
 namespace SimpleMSI;
@@ -127,7 +128,21 @@ internal class BuildCommand : CommonCommand
         print.OutLine("Configuring MSI package...");
 
         MsiEngine engine = new(print);
-        engine.ConfigureMsi(config);
+
+        try
+        {
+            engine.ConfigureMsi(config);
+        }
+        catch (ArgumentException e)
+        {
+            print.ErrLine($"Config error while configuring MSI: {e.Message}");
+            return ExitCodes.InvalidConfig;
+        }
+        catch (FileNotFoundException e)
+        {
+            print.ErrLine($"Error: Could not find file '{e.FileName}': {e.Message}");
+            return ExitCodes.FileNotFound;
+        }
 
         print.OutLine("Building MSI package (this may take a while)...");
 
