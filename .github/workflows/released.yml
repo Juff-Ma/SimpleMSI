@@ -50,7 +50,7 @@ jobs:
           name: app
           path: app
       - name: Zip app
-        run: zip -r ${{github.event.release.tag_name}}.zip app/ -j
+        run: Compress-Archive -Path app/* -DestinationPath ${{github.event.release.tag_name}}.zip
       - name: Upload to release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
