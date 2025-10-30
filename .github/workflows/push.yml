@@ -23,7 +23,7 @@ jobs:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
-      CONFIGURATION: ${{ github.event_name == 'workflow_call' && inputs.configuration || 'Debug' }}
+      CONFIGURATION: ${{ inputs.configuration || 'Debug' }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
