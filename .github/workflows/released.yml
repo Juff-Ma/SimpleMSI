@@ -44,15 +44,20 @@ jobs:
     needs: compile
     runs-on: windows-2025
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Download app artifact
         uses: actions/download-artifact@v5
         with:
           name: app
           path: app
       - name: Zip app
-        run: Compress-Archive -Path app/* -DestinationPath SimpleMSI-${{github.event.release.tag_name}}.zip
+        run: Compress-Archive -Path app/* -DestinationPath SimpleMSI-${{github.event.release.tag_name}}-x64.zip
+      - name: Build MSI
+        run: app/SimpleMSI.exe build -vf app/SimpleMSI.exe -nl -o SimpleMSI-${{github.event.release.tag_name}}-x64.msi
       - name: Upload to release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         run: |
-          gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}.zip -R Juff-Ma/SimpleMSI
+          gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}-x64.zip
+          gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}-x64.msi
