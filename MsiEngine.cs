@@ -42,7 +42,7 @@ public class MsiEngine(PrintContext print = default)
             switch (scope)
             {
                 case InstallScope.perMachine: installDestination = "%ProgramFiles%\\"; break;
-                case InstallScope.perUser: installDestination = "%LocalAppData%\\"; break;
+                case InstallScope.perUser: installDestination = "%LocalAppData%\\Programs\\"; break;
                 default: throw new InvalidOperationException("What the hell just happened"); //should never happen
             }
 
