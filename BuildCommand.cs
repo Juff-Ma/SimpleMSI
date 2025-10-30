@@ -11,6 +11,7 @@ You should have received a copy of the GNU Affero General Public License along w
 */
 #endregion
 
+using System.Diagnostics;
 using DotMake.CommandLine;
 
 namespace SimpleMSI;
@@ -23,6 +24,11 @@ internal class BuildCommand : CommonCommand
         Name = "config", Alias = "c",
         ValidationRules = CliValidationRules.LegalFileName | CliValidationRules.ExistingFile)]
     public string? ConfigFile { get; set; }
+
+    [CliOption(Description = "EXE/DLL File to grab Version from", Required = false,
+        Name = "grab-version-from-file",
+        ValidationRules = CliValidationRules.LegalPath | CliValidationRules.ExistingFile)]
+    public string? VersionFile { get; set; }
 
     public override async Task<int> RunAsync(CliContext cliContext)
     {
@@ -94,9 +100,21 @@ internal class BuildCommand : CommonCommand
 
         print.VerboseLine("Adjusting config...");
 
+        if (VersionFile is not null && Version is not null)
+        {
+            print.ErrLine("Error: You may not specify both a version and version file");
+            return ExitCodes.InvalidArguments;
+        }
+
         if (Version is not null)
         {
             config.General.Version = Version.ToString();
+        }
+
+        if (VersionFile is not null)
+        {
+            var attributes = FileVersionInfo.GetVersionInfo(VersionFile);
+            config.General.Version = attributes.FileVersion ?? throw new InvalidDataException("File does not contain valid version information");
         }
 
         if (Platform is not null)

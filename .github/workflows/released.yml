@@ -50,9 +50,9 @@ jobs:
           name: app
           path: app
       - name: Zip app
-        run: Compress-Archive -Path app/* -DestinationPath ${{github.event.release.tag_name}}.zip
+        run: Compress-Archive -Path app/* -DestinationPath SimpleMSI-${{github.event.release.tag_name}}.zip
       - name: Upload to release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         run: |
-          gh release upload ${{github.event.release.tag_name}} ${{github.event.release.tag_name}}.zip -R Juff-Ma/SimpleMSI
+          gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}.zip -R Juff-Ma/SimpleMSI
