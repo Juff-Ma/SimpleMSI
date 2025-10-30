@@ -56,7 +56,7 @@ jobs:
       - name: Build MSI
         run: |
           cd app
-          SimpleMSI.exe build -c ${{ github.workspace }}/SimpleMSI.msi.toml -vf SimpleMSI.exe -nl -o ${{ github.workspace }}/SimpleMSI-${{github.event.release.tag_name}}-x64.msi
+          ./SimpleMSI.exe build -c ${{ github.workspace }}/SimpleMSI.msi.toml -vf SimpleMSI.exe -nl -o ${{ github.workspace }}/SimpleMSI-${{github.event.release.tag_name}}-x64.msi
       - name: Upload to release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
