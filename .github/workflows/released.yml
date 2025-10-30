@@ -52,12 +52,15 @@ jobs:
           name: app
           path: app
       - name: Zip app
-        run: Compress-Archive -Path app/* -DestinationPath SimpleMSI-${{github.event.release.tag_name}}-x64.zip
+        run: Compress-Archive -Path app/* -DestinationPath ${{ github.workspace }}/SimpleMSI-${{github.event.release.tag_name}}-x64.zip
       - name: Build MSI
-        run: app/SimpleMSI.exe build -vf app/SimpleMSI.exe -nl -o SimpleMSI-${{github.event.release.tag_name}}-x64.msi
+        run: |
+          cd app
+          SimpleMSI.exe build -c ${{ github.workspace }}/SimpleMSI.msi.toml -vf SimpleMSI.exe -nl -o ${{ github.workspace }}/SimpleMSI-${{github.event.release.tag_name}}-x64.msi
       - name: Upload to release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         run: |
+          cd ${{ github.workspace }}
           gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}-x64.zip
           gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}-x64.msi
