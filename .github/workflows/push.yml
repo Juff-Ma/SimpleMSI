@@ -47,10 +47,10 @@ jobs:
       with:
         name: app
         path: out/app/**
-    - name: Build for target any
-      run: dotnet build SimpleMSI.csproj -c $env:CONFIGURATION --no-restore -r any
+    - name: Build for nuget
+      run: dotnet build SimpleMSI.csproj -c $env:CONFIGURATION --no-restore
     - name: Pack nupkg
-      run: dotnet pack SimpleMSI.csproj -c $env:CONFIGURATION --no-build -r any -o out/nupkg
+      run: dotnet pack SimpleMSI.csproj -c $env:CONFIGURATION --no-build -p:RuntimeIdentifiers="" -o out/nupkg
     - name: Upload nuget packages
       uses: actions/upload-artifact@v4
       with:
