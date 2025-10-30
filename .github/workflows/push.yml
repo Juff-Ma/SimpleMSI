@@ -18,6 +18,9 @@ jobs:
   build:
     name: Build app
     runs-on: windows-2025
+    strategy:
+      matrix:
+        dotnet: [ '9.0.x', '10.0.x' ]
     env:
       MINVERBUILDMETADATA: build.${{ github.run_id }}.${{ github.run_attempt}}
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
@@ -34,7 +37,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: ${{ matrix.dotnet }}
         cache: true
     - name: Restore dependencies
       run: dotnet restore SimpleMSI.csproj
