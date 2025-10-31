@@ -53,8 +53,12 @@ You should have received a copy of the GNU Affero General Public License along w
 		<PropertyGroup>
 		    <AssemblyVersion>$(MinVerMajor).$(MinVerMinor).0.0</AssemblyVersion>
 
-		    <GITHUB_RUN_NUMBER Condition="'$(GITHUB_RUN_NUMBER)' == ''">0</GITHUB_RUN_NUMBER>
-		    <FileVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).$(GITHUB_RUN_NUMBER)</FileVersion>
+			<!-- Use the highest possible revision number so debug releases or manual releases are always regarded as higher -->
+			<DefaultRevisionNumber>65535</DefaultRevisionNumber>
+			<FileVersion Condition="'$(Configuration)'=='Debug'">$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).$(DefaultRevisionNumber)</FileVersion>
+
+		    <GITHUB_RUN_NUMBER Condition="'$(GITHUB_RUN_NUMBER)' == ''">$(DefaultRevisionNumber)</GITHUB_RUN_NUMBER>
+		    <FileVersion Condition="'$(Configuration)'=='Release'">$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).$(GITHUB_RUN_NUMBER)</FileVersion>
 		</PropertyGroup>
 	</Target>
 
