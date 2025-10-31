@@ -63,6 +63,20 @@ public class MsiEngine(PrintContext print = default)
 
         InstallDir installDir = new(installDestination, installFiles.Concat(installDirs).ToArray());
 
+        var upgrade = MajorUpgrade.Default;
+
+        if (config.General.AllowDowngrades == true)
+        {
+            upgrade.AllowDowngrades = true;
+        }
+
+        // Since AllowDowngrades takes precedence, only set AllowSameVersionUpgrades if downgrades are not allowed
+        if (config.General.AllowSameVersionUpgrades == true
+                && config.General.AllowDowngrades != true)
+        {
+            upgrade.AllowSameVersionUpgrades = true;
+        }
+
         print.VerboseLine("Configuring msi...");
         _msi = new(config.Metadata?.DisplayName ?? config.General.Name, installDir)
         {
@@ -77,7 +91,7 @@ public class MsiEngine(PrintContext print = default)
                  throw new ArgumentException("UI Mode is not valid", nameof(config)),
 
             Description = config.Metadata?.Description ?? string.Empty,
-            MajorUpgrade = MajorUpgrade.Default
+            MajorUpgrade = upgrade
         };
 
         _msi.ResolveWildCards();

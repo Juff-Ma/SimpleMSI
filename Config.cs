@@ -39,8 +39,23 @@ public class Config : ITomlMetadataProvider
         [DataMember(Name = "platform")]
         public string? Platform { get; set; }
 
+        /// <summary>
+        /// Four part version number in the form of Major.Minor[.Build[.Revision]].
+        /// Revision is ONLY METADATA to MSI and will be ignored by Windows Installer.
+        /// If a Revision is specified, it will be ignored by upgrade detection as well and the MSI will install as a separate app.
+        /// If you need to upgrade revisions use allow_same_version_upgrades but note that this will also allow downgrades (e.g. 1.0.0.15 -> 1.0.0.3).
+        /// </summary>
         [DataMember(Name = "version")]
         public string? Version { get; set; }
+
+        /// <summary>
+        /// This implies <see cref="AllowSameVersionUpgrades"/>
+        /// </summary>
+        [DataMember(Name = "allow_downgrades")]
+        public bool? AllowDowngrades { get; set; }
+
+        [DataMember(Name = "allow_same_version_upgrades")]
+        public bool? AllowSameVersionUpgrades { get; set; }
 
         [DataMember(Name = "schedule_reboot")]
         public bool? Reboot { get; set; }

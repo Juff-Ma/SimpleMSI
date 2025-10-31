@@ -3,6 +3,9 @@
 guid = "c75792f3-289e-4dff-a832-6c247c55563c"
 name = "SimpleMSI"
 
+# this is required since SimpleMSI uses the fourth version for CI builds and helps testing
+allow_same_version_upgrades = true
+
 install_scope = "machine"
 
 [meta]
