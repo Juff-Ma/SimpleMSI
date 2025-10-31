@@ -77,8 +77,7 @@ public class MsiEngine(PrintContext print = default)
                  throw new ArgumentException("UI Mode is not valid", nameof(config)),
 
             Description = config.Metadata?.Description ?? string.Empty,
-            MajorUpgrade = MajorUpgrade.Default,
-            MajorUpgradeStrategy = MajorUpgradeStrategy.Default,
+            MajorUpgrade = MajorUpgrade.Default
         };
 
         _msi.ResolveWildCards();
