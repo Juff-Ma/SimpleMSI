@@ -104,7 +104,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 	<ItemGroup>
 		<None Include="README.md" Pack="True" PackagePath="/" />
-		<None Include="assets/SimpleMSI.png" PackagePath="/" />
+		<None Include="assets/SimpleMSI.png" Pack="True" PackagePath="/" />
 
 		<EmbeddedResource Include="Template.msi.toml" />
 
