@@ -18,18 +18,14 @@ jobs:
   publish-nuget:
     name: Publish nuget package to GH registry
     needs: compile
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: ${{ ((github.event_name == 'create' && github.event.ref_type == 'tag') || github.event_name == 'push') }}
     steps:
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 9.0.x
       - name: Download artifact
         uses: actions/download-artifact@v5
         with:
           name: nuget
-      - name: Add source
+      - name: Add nuget source
         run: dotnet nuget add source --username Juff-Ma --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Juff-Ma/index.json"
       - name: Publish nuget
         run: dotnet nuget push *.nupkg --source github --skip-duplicate

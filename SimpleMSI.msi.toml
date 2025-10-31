@@ -6,7 +6,7 @@ name = "SimpleMSI"
 install_scope = "machine"
 
 [install]
-source_dirs = [".\\*.*"]
+source_dirs = [".\\app\\*.*"]
 
 [[install.env_vars]]
 name = "PATH"

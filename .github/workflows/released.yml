@@ -21,12 +21,8 @@ jobs:
   publish-nuget:
     name: Push to nuget.org
     needs: compile
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 9.0.x
       - name: Download nuget artifact
         uses: actions/download-artifact@v5
         with:
@@ -53,14 +49,13 @@ jobs:
           path: app
       - name: Zip app
         run: Compress-Archive -Path app/* -DestinationPath ${{ github.workspace }}/SimpleMSI-${{github.event.release.tag_name}}-x64.zip
+      - name: Install WiX
+        run: dotnet tool install --global wix --version 6.0.*
       - name: Build MSI
-        run: |
-          cd app
-          ./SimpleMSI.exe build -c ${{ github.workspace }}/SimpleMSI.msi.toml -vf SimpleMSI.exe -nl -o ${{ github.workspace }}/SimpleMSI-${{github.event.release.tag_name}}-x64.msi
+        run: app/SimpleMSI.exe build -vf app/SimpleMSI.exe -nl -o SimpleMSI-${{github.event.release.tag_name}}-x64.msi
       - name: Upload to release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         run: |
-          cd ${{ github.workspace }}
           gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}-x64.zip
           gh release upload ${{github.event.release.tag_name}} SimpleMSI-${{github.event.release.tag_name}}-x64.msi
