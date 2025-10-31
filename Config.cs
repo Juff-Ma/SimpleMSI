@@ -74,7 +74,7 @@ public class Config : ITomlMetadataProvider
         [DataMember(Name = "description")]
         public string? Description { get; set; }
 
-        [DataMember(Name = "manufacturer")]
+        [DataMember(Name = "author")]
         public string? Manufacturer { get; set; }
 
         /// <summary>

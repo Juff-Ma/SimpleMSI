@@ -5,6 +5,12 @@ name = "SimpleMSI"
 
 install_scope = "machine"
 
+[meta]
+description = "A tool to create MSI packages the easy way."
+author = "Julian Rossbach"
+product_icon = ".\\assets\\SimpleMSI.ico"
+about_url = "https://github.com/Juff-Ma/SimpleMSI/"
+
 [install]
 source_dirs = [".\\app\\*.*"]
 
