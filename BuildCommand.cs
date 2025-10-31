@@ -47,7 +47,7 @@ internal class BuildCommand : CommonCommand
         if (string.IsNullOrEmpty(configPath))
         {
             var files =
-                Directory.GetFiles(Environment.CurrentDirectory, $"*.{SimpleMsiCli.AssemblyMajor}.msi.toml");
+                Directory.GetFiles(Environment.CurrentDirectory, $"*.v{SimpleMsiCli.AssemblyMajor}.msi.toml");
 
             if (files.Length > 1)
             {
@@ -64,7 +64,7 @@ internal class BuildCommand : CommonCommand
             if (files.Length > 1)
             {
                 print.ErrLine(
-                    $"Multiple config files found, please specify one using --config. Also consider using versioned config files (config.{SimpleMsiCli.AssemblyMajor}.msi.toml).");
+                    $"Multiple config files found, please specify one using --config. Also consider using versioned config files (config.v{SimpleMsiCli.AssemblyMajor}.msi.toml).");
                 return ExitCodes.InvalidArguments;
             }
 

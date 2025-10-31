@@ -52,7 +52,7 @@ jobs:
       - name: Install WiX
         run: dotnet tool install --global wix --version 6.0.*
       - name: Build MSI
-        run: app/SimpleMSI.exe build -vf app/SimpleMSI.exe -nl -o SimpleMSI-${{github.event.release.tag_name}}-x64.msi
+        run: app/SimpleMSI.exe build -c SimpleMSI.msi.toml -vf app/SimpleMSI.exe -nl -o SimpleMSI-${{github.event.release.tag_name}}-x64.msi
       - name: Upload to release
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
