@@ -43,6 +43,7 @@ You should have received a copy of the GNU Affero General Public License along w
 		<Copyright>Copyright (C) $([System.DateTime]::Now.Year.ToString()) $(Authors)</Copyright>
 		<RepositoryUrl>https://github.com/Juff-Ma/SimpleMSI</RepositoryUrl>
 		<PackageTags>MSI;WiX;WixSharp;publish;pack</PackageTags>
+		<PackageIcon>SimpleMSI.png</PackageIcon>
 		<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
