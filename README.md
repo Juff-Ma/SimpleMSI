@@ -54,7 +54,7 @@ SimpleMSI can help you with that using the `init` command:
 ```powershell
 simplemsi init YourApp -en your-main.exe -sd build-dir\*.*
 ```
-And just like that you should have a file calles `YourApp.v1.msi.toml` with a basic configuration to get you started.
+And just like that you should have a file called `YourApp.v1.msi.toml` with a basic configuration to get you started.
 
 You can then edit the file to customize it to your needs or you can just run SimpleMSI to create the MSI package:
 ```powershell
