@@ -42,7 +42,7 @@ SimpleMSI only runs on Windows and requires the WiX CLI (version 5+) to be insta
 You can download WiX from [GitHub](https://github.com/wixtoolset/wix/releases/latest) or install via [dotnet as a tool](https://docs.firegiant.com/wix/using-wix/#command-line-net-tool).
 ### Installation
 As with WiX, you can install SimpleMSI as a dotnet tool:
-```bash
+```powershell
 dotnet tool install -g SimpleMSI
 ```
 
@@ -51,13 +51,13 @@ Alternatively, if you don't have dotnet installed, you can download the latest v
 ### Running SimpleMSI
 To create an MSI package, you need to create a configuration file in TOML format.
 SimpleMSI can help you with that using the `init` command:
-```bash
+```powershell
 simplemsi init YourApp -en your-main.exe -sd your-build-dir\*.*
 ```
 And just like that you should have a file calles `YourApp.v1.msi.toml` with a basic configuration to get you started.
 
 You can then edit the file to customize it to your needs or you can just run SimpleMSI to create the MSI package:
-```bash
+```powershell
 simplemsi build
 ```
 
@@ -66,7 +66,7 @@ What next? Nothing. That's it! You just created your first MSI package with Simp
 ## Command Line Reference
 If you just run `simplemsi` without any arguments, you will see the following help message:
 
-```
+```txt
 SimpleMSI Windows Installer creation tool.
 
 Usage:
@@ -89,7 +89,7 @@ However, you will most likely want to at least specify the source directory or f
 since without them the build process could fail.
 
 Of course you can also adjust those options in the created config file later on.
-```
+```txt
 init: Initialize new config file
 
 Usage:
@@ -117,7 +117,7 @@ The `build` is what actually does the magic of creating the MSI package from the
 Options you specify on the command line will override those in the config file with the exception of source directories and files which will be merged with those in the config file.
 
 You also have the options of grabbing the version from an existing EXE or DLL file using the `-vf` option, which is not accessible via the config file.
-```
+```txt
 build: Build MSI from config file
 
 Usage:
