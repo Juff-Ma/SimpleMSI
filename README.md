@@ -52,7 +52,7 @@ Alternatively, if you don't have dotnet installed, you can download the latest v
 To create an MSI package, you need to create a configuration file in TOML format.
 SimpleMSI can help you with that using the `init` command:
 ```powershell
-simplemsi init YourApp -en your-main.exe -sd your-build-dir\*.*
+simplemsi init YourApp -en your-main.exe -sd build-dir\*.*
 ```
 And just like that you should have a file calles `YourApp.v1.msi.toml` with a basic configuration to get you started.
 
