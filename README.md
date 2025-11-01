@@ -18,7 +18,7 @@ SimpleMSI is a humble command line utility to create MSI packages the easy way.
 Almost all other tools for creating MSI packages either:
 
 1. Are paid and proprietary software
-2. Really complicated and/or have unreadable configuration formats
+2. Are really complicated and/or have unreadable configuration formats
 3. Require you to know a language like C# or JS to script the installer
 
 SimpleMSI throws all that out the window and changes it to the following:
