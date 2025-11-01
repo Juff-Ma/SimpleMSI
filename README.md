@@ -339,3 +339,9 @@ It also uses a hack for building tools that use windows-specific dependencies, s
 
 ### How it works
 
+SimpleMSI uses [WixSharp](https://github.com/oleg-shilo/wixsharp) under the hood.
+WixSharp is a wonderful tool for creating MSI packages in a scripted way but it still suffers from the WiX complexity since it too tries to expose all functionality in a way that maps closely to the original.
+
+It configures the MSI by generating a WixSharp project on the fly based on the provided configuration file and command line arguments.
+
+Afterwards it instructs WixSharp to build a wxs (WiX source) file and invokes the WiX CLI tools to compile and link the wxs into an MSI package.
