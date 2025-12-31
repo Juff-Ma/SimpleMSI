@@ -1,21 +1,21 @@
 {
   "version": 1,
   "dependencies": {
-    "net9.0-windows7.0": {
+    "net10.0-windows7.0": {
       "DotMake.CommandLine": {
         "type": "Direct",
-        "requested": "[2.8.2, )",
-        "resolved": "2.8.2",
-        "contentHash": "V0urUR+3T00L9kYsXNNcMWGpipjfiJXNWDjGpxB1b5wK6p6qm4G+Ve+3vQYMbPCeBjVM4PTqRqeyYk2u9EhEjQ==",
+        "requested": "[3.1.0, )",
+        "resolved": "3.1.0",
+        "contentHash": "n9l6n2jl2vZpAWhjt+UGe8dm1t/w1hfcZoldBPSfWWj+5EBMVbMsn3jdWJTww2bdMx4yT3wix4J3GH4qi96LZw==",
         "dependencies": {
-          "System.CommandLine": "[2.0.0-rc.1.25451.107]"
+          "System.CommandLine": "2.0.0"
         }
       },
       "MinVer": {
         "type": "Direct",
-        "requested": "[6.0.0, )",
-        "resolved": "6.0.0",
-        "contentHash": "+/SsmiySsXJlvQLCGBqaZKNVt3s/Y/HbAdwtop7Km2CnuZbaScoqkWJEBQ5Cy9ebkn6kCYKrHsXgwrFdTgcb3g=="
+        "requested": "[6.1.0, )",
+        "resolved": "6.1.0",
+        "contentHash": "dGyb6EBQ87AhyagcXslfDGL/A+xbNtRD23CBjXoKo82TvjHqF2BBz61B6EBx/S117KUMB1PEUpRLrHcu6UjOhg=="
       },
       "Tomlyn": {
         "type": "Direct",
@@ -25,24 +25,24 @@
       },
       "WixSharp.Core": {
         "type": "Direct",
-        "requested": "[2.10.0, )",
-        "resolved": "2.10.0",
-        "contentHash": "oQFFHdKYSx9tMNXAtUQMyql0MhPvhqnyx9q+0RGHzPbLdYT2hbMcOLuPqdWmwr6q+UHt96nWPOrAD9r0xAqhdQ==",
+        "requested": "[2.12.0, )",
+        "resolved": "2.12.0",
+        "contentHash": "2DKdtTVRHMISk4jQMEUrSSjL7jkCrDUGusqigVH5obKe6gdwImcMY/D2qcT9dadlqWqCvHJA82TWO3gWb8eUtg==",
         "dependencies": {
-          "WixSharp.Msi.Core": "2.10.0",
+          "WixSharp.Msi.Core": "2.12.0",
           "WixToolset.Dtf.WindowsInstaller": "4.0.4",
           "WixToolset.Mba.Core": "4.0.4"
         }
       },
       "System.CommandLine": {
         "type": "Transitive",
-        "resolved": "2.0.0-rc.1.25451.107",
-        "contentHash": "j+0Yg2TZ5rwbGTRArdF9w993dGWCPRbD+lg3S0D6MLckrKQ3J70s52TlbxKlISsoXUP/X+e6uPocbkKjP3wSag=="
+        "resolved": "2.0.0",
+        "contentHash": "Bjklzc5NoxqAGFi7BcGlY2TWAdB06Bq3a5sfRr3ubMRU80Mf98eyq3Y2UgR6xRV0TLznZmfe5T7mUjOunRNcdA=="
       },
       "WixSharp.Msi.Core": {
         "type": "Transitive",
-        "resolved": "2.10.0",
-        "contentHash": "PXe294M0almw/X+CDoLDTzuQkFRaHBB68qrFs31qA4dENBsQoW3GlvvuXVFdha542qVUO+G1dGadCEH1q1aSxQ=="
+        "resolved": "2.12.0",
+        "contentHash": "dcV1uUUHoa9rBo5ipgvhLoeUwfw4jIA00upAxdPzdbpFwUufZBZP087W4+uQ2sWFJQUdbvCbd4rqLyHl3M0YYQ=="
       },
       "WixToolset.Dtf.WindowsInstaller": {
         "type": "Transitive",
@@ -55,28 +55,28 @@
         "contentHash": "yGnvUE6ffRDjCR1NHJLPzm0GNgrSRm8Vc9yAh68xjo7Ag93LXqRIzD8YoD+jm1dy0kQzuhBKSqfNh1+jgBanlg=="
       }
     },
-    "net9.0-windows7.0/any": {
+    "net10.0-windows7.0/any": {
       "WixToolset.Mba.Core": {
         "type": "Transitive",
         "resolved": "4.0.4",
         "contentHash": "yGnvUE6ffRDjCR1NHJLPzm0GNgrSRm8Vc9yAh68xjo7Ag93LXqRIzD8YoD+jm1dy0kQzuhBKSqfNh1+jgBanlg=="
       }
     },
-    "net9.0-windows7.0/win-arm64": {
+    "net10.0-windows7.0/win-arm64": {
       "WixToolset.Mba.Core": {
         "type": "Transitive",
         "resolved": "4.0.4",
         "contentHash": "yGnvUE6ffRDjCR1NHJLPzm0GNgrSRm8Vc9yAh68xjo7Ag93LXqRIzD8YoD+jm1dy0kQzuhBKSqfNh1+jgBanlg=="
       }
     },
-    "net9.0-windows7.0/win-x64": {
+    "net10.0-windows7.0/win-x64": {
       "WixToolset.Mba.Core": {
         "type": "Transitive",
         "resolved": "4.0.4",
         "contentHash": "yGnvUE6ffRDjCR1NHJLPzm0GNgrSRm8Vc9yAh68xjo7Ag93LXqRIzD8YoD+jm1dy0kQzuhBKSqfNh1+jgBanlg=="
       }
     },
-    "net9.0-windows7.0/win-x86": {
+    "net10.0-windows7.0/win-x86": {
       "WixToolset.Mba.Core": {
         "type": "Transitive",
         "resolved": "4.0.4",
