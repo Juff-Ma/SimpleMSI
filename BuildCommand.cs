@@ -11,8 +11,8 @@ You should have received a copy of the GNU Affero General Public License along w
 */
 #endregion
 
-using System.Diagnostics;
 using DotMake.CommandLine;
+using System.Diagnostics;
 
 namespace SimpleMSI;
 
@@ -143,8 +143,10 @@ internal class BuildCommand : CommonCommand
 
         config.General.OutFileName = OutputFile ?? config.General.OutFileName;
 
-        print.OutLine("Configuring MSI package...");
+        print.VerboseLine("Configuring WiX...");
+        MsiEngine.ApplyGlobalConfiguration(Verbose);
 
+        print.OutLine("Configuring MSI package...");
         MsiEngine engine = new(print);
 
         try

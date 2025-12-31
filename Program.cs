@@ -11,9 +11,9 @@ You should have received a copy of the GNU Affero General Public License along w
 */
 #endregion
 
-using System.Reflection;
 using DotMake.CommandLine;
 using SimpleMSI;
+using System.Reflection;
 
 return await Cli.RunAsync<SimpleMsiCli>(args, new()
 {

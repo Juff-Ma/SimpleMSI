@@ -22,6 +22,18 @@ namespace SimpleMSI;
 /// </summary>
 public class MsiEngine(PrintContext print = default)
 {
+    /// <summary>
+    /// Applies global configuration to the WixSharp compiler. This is persistent across all MsiEngine instances.
+    /// </summary>
+    /// <param name="enableVerbose">Enable verbose WiX output.</param>
+    public static void ApplyGlobalConfiguration(bool enableVerbose)
+    {
+        Compiler.AllowNonRtfLicense = true;
+        Compiler.SignAllFilesOptions.SignEmbeddedAssemblies = true;
+        Compiler.SignAllFilesOptions.SkipSignedFiles = true;
+        Compiler.VerboseOutput = enableVerbose;
+    }
+
     private Project? _msi;
 
     public void ConfigureMsi(Config config)
