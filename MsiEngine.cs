@@ -129,7 +129,7 @@ public class MsiEngine(PrintContext print = default)
                 WellKnownLocations = config.Installation.Signing.SignToolLocation,
                 OptionalArguments = config.Installation.Signing.ExtraArguments,
 
-                OutputLevel = print.IsVerbose ? SignOutputLevel.Verbose : SignOutputLevel.Standard
+                OutputLevel = print.IsVerbose ? SignOutputLevel.Verbose : SignOutputLevel.Minimal
             };
 
             if (config.Installation.Signing.TimeUrl is {} url)

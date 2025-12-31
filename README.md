@@ -317,7 +317,8 @@ algorithm = "sha256"
 # Whether to sign embedded files as well.
 # The default is false.
 # This includes Program files and DLLs of the App you're shipping unless they are already signed.
-# Note: The signing is performed in a subdirectory which is not cleaned up automatically.
+# Note A: The signing is in place if possible, so you might want to make a copy of your files before building the installer.
+# Note B: If the files are locked there will be a copy made silently and put into a subdirectory which isn't automatically deleted.
 sign_embedded = true
 
 # Folders to search for signtool.exe if not found in PATH.
