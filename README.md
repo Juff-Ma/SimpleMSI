@@ -18,7 +18,7 @@ SimpleMSI is a humble command line utility to create MSI packages the easy way.
 Almost all other tools for creating MSI packages either:
 
 1. Are paid and proprietary software
-2. Really complicated and/or have unreadable configuration formats
+2. Are really complicated and/or have unreadable configuration formats
 3. Require you to know a language like C# or JS to script the installer
 
 SimpleMSI throws all that out the window and changes it to the following:
@@ -54,7 +54,7 @@ SimpleMSI can help you with that using the `init` command:
 ```powershell
 simplemsi init YourApp -en your-main.exe -sd build-dir\*.*
 ```
-And just like that you should have a file calles `YourApp.v1.msi.toml` with a basic configuration to get you started.
+And just like that you should have a file called `YourApp.v1.msi.toml` with a basic configuration to get you started.
 
 You can then edit the file to customize it to your needs or you can just run SimpleMSI to create the MSI package:
 ```powershell
