@@ -237,7 +237,7 @@ public class Config : ITomlMetadataProvider
 
             /// <summary>
             /// Sign all files embedded in the MSI as well. This includes Program files and DLLs of the App you're shipping unless they are already signed.
-            /// Note: The signing is performed in place on your source files, so make sure to have backups if needed.
+            /// Note: The signing is performed in a subdirectory which is not cleaned up automatically. You may want to delete it manually after the build.
             /// </summary>
             [DataMember(Name = "sign_embedded")]
             public bool? SignEmbeddedFiles { get; set; }

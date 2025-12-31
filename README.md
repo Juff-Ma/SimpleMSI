@@ -126,6 +126,8 @@ Usage:
 Options:
   -c, --config <config>                                   Path to configuration file
   -vf, --grab-version-from-file <grab-version-from-file>  EXE/DLL File to grab Version from
+  -cn, --certificate-name <certificate-name>              Name of the code signing certificate to use
+  -cp, --certificate-password <certificate-password>      Password of the code signing certificate
   -v, --version <version>                                 Version of the app
   -p, --platform <arm32|arm64|x64|x86>                    Platform the installer should run on
   -o, --output-file <output-file>                         Output file path
@@ -286,6 +288,46 @@ source_dirs = [".\\app\\*.*"]
 # Whether to include files in subdirectories of the source_dirs.
 # The default is true.
 source_dirs_are_recursive = true
+
+# Code signing configuration.
+[install.signing]
+
+# The name of the code signing certificate to use.
+# This can be the path to a PFX file or the name of a certificate in the Windows Certificate Store.
+cert_name = "ExampleCert.pfx"
+
+# The password for the code signing certificate.
+# This will be shown in the UAC prompt during installation.
+# If this isn't set, the UAC prompt will use the filename instead.
+description = "ExampleApp Installer"
+
+# The URL of the timestamp server to use for code signing.
+# The example uses Microsoft's free timestamp server.
+time_url = "http://timestamp.acs.microsoft.com"
+
+# Type of the certificate store. May be "sha1", "name" or "pfx". Defaults to "pfx".
+# pfx is used for PFX files, "name" and "sha1" are used for certificates in the Windows Certificate Store.
+# sha1 identifies the certificate by its hash, "name" by its common name.
+store_type = "pfx"
+
+# The hashing algorithm to use for code signing. May be "sha1" or "sha256".
+# sha256 is recommended for better security and the default.
+algorithm = "sha256"
+
+# Whether to sign embedded files as well.
+# The default is false.
+# This includes Program files and DLLs of the App you're shipping unless they are already signed.
+# Note: The signing is performed in a subdirectory which is not cleaned up automatically.
+sign_embedded = true
+
+# Folders to search for signtool.exe if not found in PATH.
+# This is only required if signtool.exe is not in PATH.
+# You can provide multiple locations by splitting them with semicolons (;).
+signtool_location = "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\"
+
+# Extra arguments to pass to signtool.exe during code signing.
+# The provided example selects the machine store instead of the user certificate store.
+extra_arguments = "/sm"
 
 # Environment variables to set during installation.
 [[install.env_vars]]
