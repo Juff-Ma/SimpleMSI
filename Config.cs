@@ -202,8 +202,8 @@ public class Config : ITomlMetadataProvider
             /// <summary>
             /// Description to include in the signature. E.g. My Company MyApp.
             /// </summary>
-            [DataMember(IsRequired = true, Name = "description")]
-            public string Description { get; set; } = "";
+            [DataMember(Name = "description")]
+            public string? Description { get; set; }
 
             /// <summary>
             /// URL to the timestamping server.

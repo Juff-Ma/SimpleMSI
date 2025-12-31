@@ -30,6 +30,12 @@ internal class BuildCommand : CommonCommand
         ValidationRules = CliValidationRules.LegalPath | CliValidationRules.ExistingFile)]
     public string? VersionFile { get; set; }
 
+    [CliOption(Description = "Name of the code signing certificate to use", Required = false)]
+    public string? CertificateName { get; set; }
+
+    [CliOption(Description = "Password of the code signing certificate", Required = false)]
+    public string? CertificatePassword { get; set; }
+
     public override async Task<int> RunAsync(CliContext cliContext)
     {
         if (PrintLogo)
@@ -142,6 +148,20 @@ internal class BuildCommand : CommonCommand
         }
 
         config.General.OutFileName = OutputFile ?? config.General.OutFileName;
+
+        if (CertificateName is not null)
+        {
+            config.Installation ??= new();
+            config.Installation.Signing ??= new();
+            config.Installation.Signing.CertificateName = CertificateName;
+        }
+
+        if (CertificatePassword is not null)
+        {
+            config.Installation ??= new();
+            config.Installation.Signing ??= new();
+            config.Installation.Signing.Password = CertificatePassword;
+        }
 
         print.VerboseLine("Configuring WiX...");
         MsiEngine.ApplyGlobalConfiguration(Verbose);
