@@ -329,18 +329,18 @@ name = "Start ExampleApp"
 ```
 
 ## Appendix
-### Building from Source
-SimpleMSI is built using .NET 9.0 SDK. To build SimpleMSI from source, clone the repository and build it like any other .NET project.
+### Building from source
+SimpleMSI is built using .NET 10.0. To build SimpleMSI from source, clone the repository and build it like any other .NET project.
 
 When publishing SimpleMSI you need to ensure that you specify the runtime identifier for Windows, e.g. `win-x64` or `win-arm64`.
 
-Packing SimpleMSI as a dotnet tool is a different story. SimpleMSI uses new features of .NET 10.0 for packing as a tool, so you need to use .NET 10.0 SDK and make sure to specify `-p:RuntimeIdentifiers=""` is set.
-It also uses a hack for building tools that use windows-specific dependencies, since dotnet tools are supposed to be cross-platform.
+Packing SimpleMSI as a dotnet tool is a different story. SimpleMSI uses a few tricks to be packages a tool, so you need to make sure `-p:RuntimeIdentifiers=""` is set.
+Another such hack is used for the windows-specific dependencies, since dotnet tools are supposed to be cross-platform, this doesn't change anything in the build process but should be kept in the back of your mind.
 
 ### How it works
 
 SimpleMSI uses [WixSharp](https://github.com/oleg-shilo/wixsharp) under the hood.
-WixSharp is a wonderful tool for creating MSI packages in a scripted way but it still suffers from the WiX complexity since it too tries to expose all functionality in a way that maps closely to the original.
+WixSharp is a wonderful tool for creating MSI packages in a scripted way but it still suffers from the WiX complexity since it to tries to expose all functionality in a way that maps closely to the original.
 
 It configures the MSI by generating a WixSharp project on the fly based on the provided configuration file and command line arguments.
 
