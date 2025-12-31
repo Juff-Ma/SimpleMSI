@@ -178,6 +178,71 @@ public class Config : ITomlMetadataProvider
         [DataMember(Name = "source_dirs_are_recursive")]
         public bool? DirsRecursive { get; set; }
 
+        /// <summary>
+        /// Configuration for code signing the MSI and installed files.
+        /// </summary>
+        [DataMember(Name = "signing")]
+        public SigningConfig? Signing { get; set; }
+        public class SigningConfig : ITomlMetadataProvider
+        {
+            [IgnoreDataMember]
+            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
+
+            /// <summary>
+            /// Name of the PFX File or the certificate in the certificate store to use for signing.
+            /// </summary>
+            [DataMember(IsRequired = true, Name = "cert_name")]
+            public string CertificateName { get; set; } = "";
+
+            /// <summary>
+            /// PFX file password. Shouldn't be provided in the config for security reasons.
+            /// </summary>
+            [IgnoreDataMember] public string? Password { get; set; } = null;
+
+            /// <summary>
+            /// Description to include in the signature. E.g. My Company MyApp.
+            /// </summary>
+            [DataMember(IsRequired = true, Name = "description")]
+            public string Description { get; set; } = "";
+
+            /// <summary>
+            /// URL to the timestamping server.
+            /// </summary>
+            [DataMember(Name = "time_url")]
+            public string? TimeUrl { get; set; }
+
+            /// <summary>
+            /// Type of the certificate store. May be "sha1", "name" or "pfx". Defaults to "pfx".
+            /// </summary>
+            [DataMember(Name = "store_type")]
+            public string? StoreType { get; set; }
+
+            /// <summary>
+            /// Hash algorithm to use for signing. May be "sha1" or "sha256". Defaults to "sha256".
+            /// </summary>
+            [DataMember(Name = "algorithm")]
+            public string? HashAlgorithm { get; set; }
+
+            /// <summary>
+            /// Additional arguments to pass to signtool
+            /// </summary>
+            [DataMember(Name = "extra_arguments")]
+            public string? ExtraArguments { get; set; }
+
+            /// <summary>
+            /// Folder where signtool.exe is located. If not specified, it is assumed to be in the PATH. May include multiple ; separated paths.
+            /// </summary>
+            [DataMember(Name = "signtool_location")]
+            public string? SignToolLocation { get; set; }
+
+            /// <summary>
+            /// Sign all files embedded in the MSI as well. This includes Program files and DLLs of the App you're shipping unless they are already signed.
+            /// Note: The signing is performed in place on your source files, so make sure to have backups if needed.
+            /// </summary>
+            [DataMember(Name = "sign_embedded")]
+            public bool? SignEmbeddedFiles { get; set; }
+        }
+
         [DataMember(Name = "env_vars")]
         public List<EnvVarConfig> EnvironmentVariables { get; } = [];
         public class EnvVarConfig : ITomlMetadataProvider

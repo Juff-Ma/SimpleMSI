@@ -117,6 +117,38 @@ public class MsiEngine(PrintContext print = default)
 
         _msi.ResolveWildCards();
 
+        print.VerboseLine("Configuring code signing...");
+        if (config.Installation?.Signing is not null)
+        {
+            var signature = new DigitalSignature()
+            {
+                CertificateId = config.Installation.Signing.CertificateName,
+                Password = config.Installation.Signing.Password,
+                Description = config.Installation.Signing.Description,
+
+                WellKnownLocations = config.Installation.Signing.SignToolLocation,
+                OptionalArguments = config.Installation.Signing.ExtraArguments,
+
+                OutputLevel = print.IsVerbose ? SignOutputLevel.Verbose : SignOutputLevel.Standard
+            };
+
+            if (config.Installation.Signing.TimeUrl is {} url)
+            {
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                    throw new ArgumentException("Timestamp URL is not valid", nameof(config));
+
+                signature.TimeUrl = new Uri(url);
+            }
+
+            signature.HashAlgorithm = config.Installation.Signing.GetHashAlgorithm() ??
+                                          throw new ArgumentException("Signing has algorithm is invalid", nameof(config));
+            signature.CertificateStore = config.Installation.Signing.GetStoreType() ?? 
+                                          throw new ArgumentException("Signing certificate store is invalid", nameof(config));
+
+            _msi.DigitalSignature = signature;
+            _msi.SignAllFiles = config.Installation.Signing.SignEmbeddedFiles == true;
+        }
+
         foreach (var shortcut in config.Installation?.Shortcuts ?? [])
         {
             var files = _msi.FindFile(f => f.Name.EndsWith(shortcut.TargetFile));

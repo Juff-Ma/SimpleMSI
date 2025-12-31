@@ -120,4 +120,39 @@ internal static class ConfigExtensions
             _ => null
         };
     }
+
+    /// <summary>
+    /// Determines the hash algorithm type specified by the file hash configuration.
+    /// </summary>
+    /// <remarks>If the configuration specifies an unrecognized algorithm, the method defaults to
+    /// HashAlgorithmType.sha1.</remarks>
+    /// <param name="config">The file hash configuration from which to determine the hash algorithm. Cannot be null.</param>
+    /// <returns>A value of the HashAlgorithmType enumeration that corresponds to the algorithm specified in the configuration.
+    /// Returns HashAlgorithmType.sha1 if the algorithm is not recognized.</returns>
+    public static HashAlgorithmType? GetHashAlgorithm(this Config.InstallationConfig.SigningConfig config)
+    {
+        return config.HashAlgorithm switch
+        {
+            "sha1" => HashAlgorithmType.sha1,
+            "sha256" => HashAlgorithmType.sha256,
+
+            // default to sha1
+            null => HashAlgorithmType.sha256,
+            _ => null
+        };
+    }
+
+    public static StoreType? GetStoreType(this Config.InstallationConfig.SigningConfig config)
+    {
+        return config.StoreType switch
+        {
+            "sha1" => StoreType.sha1Hash,
+            "name" => StoreType.commonName,
+            "pfx" => StoreType.file,
+
+            // default to file
+            null => StoreType.file,
+            _ => null
+        };
+    }
 }
