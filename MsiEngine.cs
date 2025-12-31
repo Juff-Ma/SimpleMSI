@@ -22,16 +22,25 @@ namespace SimpleMSI;
 /// </summary>
 public class MsiEngine(PrintContext print = default)
 {
+    private static bool _configApplied = false;
     /// <summary>
     /// Applies global configuration to the WixSharp compiler. This is persistent across all MsiEngine instances.
     /// </summary>
     /// <param name="enableVerbose">Enable verbose WiX output.</param>
-    public static void ApplyGlobalConfiguration(bool enableVerbose)
+    /// <param name="force">Apply configuration even if it already was before.</param>
+    public static void ApplyGlobalConfiguration(bool enableVerbose, bool force = false)
     {
+        if (_configApplied && !force)
+        {
+            throw new InvalidOperationException("Global configuration shouldn't be applied twice");
+        }
+
         Compiler.AllowNonRtfLicense = true;
         Compiler.SignAllFilesOptions.SignEmbeddedAssemblies = true;
         Compiler.SignAllFilesOptions.SkipSignedFiles = true;
         Compiler.VerboseOutput = enableVerbose;
+
+        _configApplied = true;
     }
 
     private Project? _msi;
