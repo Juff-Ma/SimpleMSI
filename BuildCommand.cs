@@ -22,7 +22,7 @@ internal class BuildCommand : CommonCommand
 
     [CliOption(Description = "Path to configuration file", Required = false,
         Name = "config", Alias = "c",
-        ValidationRules = CliValidationRules.LegalFileName | CliValidationRules.ExistingFile)]
+        ValidationRules = CliValidationRules.LegalPath | CliValidationRules.ExistingFile)]
     public string? ConfigFile { get; set; }
 
     [CliOption(Description = "EXE/DLL File to grab Version from", Required = false,
