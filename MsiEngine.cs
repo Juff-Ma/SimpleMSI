@@ -210,10 +210,10 @@ public class MsiEngine(PrintContext print = default)
             UrlInfoAbout = config.Metadata?.AboutUrl,
             UrlUpdateInfo = config.Metadata?.UpdateUrl,
 
-            NoModify = config.Metadata?.ForbidModify,
-            NoRepair = config.Metadata?.ForbidRepair,
-            NoRemove = config.Metadata?.ForbidUninstall,
-            SystemComponent = config.Metadata?.HideProgramEntry,
+            NoModify = config.Metadata?.ForbidModify == true ? true : null, // WiX seems to expect null and not false, which is... odd.
+            NoRepair = config.Metadata?.ForbidRepair == true ? true : null,
+            NoRemove = config.Metadata?.ForbidUninstall == true ? true : null,
+            SystemComponent = config.Metadata?.HideProgramEntry == true ? true : null,
         };
 
         if (config.Metadata?.ProductIconPath is var icon && icon is not null && !Path.Exists(icon))
