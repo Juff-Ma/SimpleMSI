@@ -9,7 +9,10 @@ permissions:
 
 on:
   create:
-  
+  push:
+    tags:
+      - '*'
+
 jobs:
   compile:
     name: Compile package
@@ -18,11 +21,11 @@ jobs:
   publish-nuget:
     name: Publish nuget package to GH registry
     needs: compile
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     if: ${{ ((github.event_name == 'create' && github.event.ref_type == 'tag') || github.event_name == 'push') }}
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: nuget
       - name: Add nuget source

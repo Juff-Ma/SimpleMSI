@@ -26,13 +26,13 @@ jobs:
       CONFIGURATION: ${{ inputs.configuration || 'Debug' }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0
         fetch-tags: true
         filter: tree:0
     - name: Setup .NET
-      uses: actions/setup-dotnet@v5
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: 10.0.x
         cache: true
@@ -41,14 +41,14 @@ jobs:
     - name: Publish
       run: dotnet publish SimpleMSI.csproj -c $env:CONFIGURATION --no-restore -r win-x64 -o out/app
     - name: Upload app artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: app
         path: out/app/**
     - name: Build nupkg
       run: dotnet pack SimpleMSI.csproj -c $env:CONFIGURATION --no-restore -p:RuntimeIdentifiers="" -o out/nupkg
     - name: Upload nuget packages
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: nuget
         path: out/nupkg/*.nupkg
