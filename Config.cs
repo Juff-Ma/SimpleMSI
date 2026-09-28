@@ -282,7 +282,7 @@ public class Config
         TomlSerializerOptions options = new()
         {
             MetadataStore = store
-        }; ;
+        };
 
         if (TomlSerializer.TryDeserialize(toml, out Config? config, options))
         {
