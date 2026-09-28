@@ -52,7 +52,7 @@ Alternatively, if you don't have dotnet installed, you can download the latest v
 To create an MSI package, you need to create a configuration file in TOML format.
 SimpleMSI can help you with that using the `init` command:
 ```powershell
-simplemsi init YourApp -en your-main.exe -sd build-dir\*.*
+simplemsi init YourApp -e your-main.exe -d build-dir\*.*
 ```
 And just like that you should have a file called `YourApp.v1.msi.toml` with a basic configuration to get you started.
 
@@ -73,7 +73,7 @@ Usage:
   SimpleMSI [command] [options]
 
 Options:
-  -nl, --nologo   Do not display logo and copyright [default: False]
+  -s, --nologo    Do not display logo and copyright [default: False]
   -?, -h, --help  Show help and usage information
   -v, --version   Show version information
 
@@ -99,16 +99,16 @@ Arguments:
   <app-name>  Application identifying name [required]
 
 Options:
-  -g, --guid <guid>                         Application identifying GUID
-  -en, --executable-name <executable-name>  Executable name used for default Shortcut
-  -v, --version <version>                   Version of the app
-  -p, --platform <arm32|arm64|x64|x86>      Platform the installer should run on
-  -o, --output-file <output-file>           Output file path
-  -sd, --dir <dir>                          Source directories to include files from, can be provided multiple times
-  -sf, --file <file>                        Source files include, can be provided multiple times
-  --verbose                                 Print extended output [default: False]
-  -nl, --nologo                             Do not display logo and copyright [default: False]
-  -?, -h, --help                            Show help and usage information
+  -g, --guid <guid>                        Application identifying GUID
+  -e, --executable-name <executable-name>  Executable name used for default Shortcut
+  -v, --version <version>                  Version of the app
+  -p, --platform <arm32|arm64|x64|x86>     Platform the installer should run on
+  -o, --output-file <output-file>          Output file path
+  -d, --dir <dir>                          Source directories to include files from, can be provided multiple times
+  -f, --file <file>                        Source files include, can be provided multiple times
+  -V, --verbose                            Print extended output [default: False]
+  -s, --nologo                             Do not display logo and copyright [default: False]
+  -?, -h, --help                           Show help and usage information
 ```
 
 ### Build
@@ -124,18 +124,19 @@ Usage:
   SimpleMSI build [options]
 
 Options:
-  -c, --config <config>                                   Path to configuration file
-  -vf, --grab-version-from-file <grab-version-from-file>  EXE/DLL File to grab Version from
-  -cn, --certificate-name <certificate-name>              Name of the code signing certificate to use
-  -cp, --certificate-password <certificate-password>      Password of the code signing certificate
-  -v, --version <version>                                 Version of the app
-  -p, --platform <arm32|arm64|x64|x86>                    Platform the installer should run on
-  -o, --output-file <output-file>                         Output file path
-  -sd, --dir <dir>                                        Source directories to include files from, can be provided multiple times
-  -sf, --file <file>                                      Source files include, can be provided multiple times
-  --verbose                                               Print extended output [default: False]
-  -nl, --nologo                                           Do not display logo and copyright [default: False]
-  -?, -h, --help                                          Show help and usage information
+  -c, --config <config>                                  Path to configuration file
+  -F, --grab-version-from-file <grab-version-from-file>  EXE/DLL File to grab Version from
+  -C, --certificate-name <certificate-name>              Name of the code signing certificate to use
+  -P, --certificate-password <certificate-password>      Password of the code signing certificate
+  -v, --version <version>                                Version of the app
+  -p, --platform <arm32|arm64|x64|x86>                   Platform the installer should run on
+  -o, --output-file <output-file>                        Output file path
+  -d, --dir <dir>                                        Source directories to include files from, can be provided
+                                                         multiple times
+  -f, --file <file>                                      Source files include, can be provided multiple times
+  -V, --verbose                                          Print extended output [default: False]
+  -s, --nologo                                           Do not display logo and copyright [default: False]
+  -?, -h, --help                                         Show help and usage information
 ```
 
 ## Configuration File Reference
