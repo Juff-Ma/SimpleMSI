@@ -98,7 +98,7 @@ You should have received a copy of the GNU Affero General Public License along w
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Tomlyn" Version="0.19.0" />
+		<PackageReference Include="Tomlyn" Version="2.10.1" />
 		<PackageReference Include="WixSharp.Core" Version="2.14.1" />
 	</ItemGroup>
 

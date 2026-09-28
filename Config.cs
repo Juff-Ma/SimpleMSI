@@ -13,21 +13,19 @@ You should have received a copy of the GNU Affero General Public License along w
 using System.Runtime.Serialization;
 using Tomlyn;
 using Tomlyn.Model;
+using Tomlyn.Serialization;
 
 namespace SimpleMSI;
 
-public class Config : ITomlMetadataProvider
+public class Config
 {
-    [IgnoreDataMember]
-    public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-
+    [IgnoreDataMember] 
+    private TomlMetadataStore? TomlMetadataStore { get; set; }
+    
     [DataMember(IsRequired = true, Name = "general")]
     public GeneralConfig General { get; set; } = new();
-    public class GeneralConfig : ITomlMetadataProvider
+    public class GeneralConfig
     {
-        [IgnoreDataMember]
-        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-
         [DataMember(IsRequired = true, Name = "guid")]
         public string Guid { get; set; } = System.Guid.Empty.ToString();
 
@@ -78,11 +76,8 @@ public class Config : ITomlMetadataProvider
 
     [DataMember(Name = "meta")]
     public MetadataConfig? Metadata { get; set; }
-    public class MetadataConfig : ITomlMetadataProvider
+    public class MetadataConfig
     {
-        [IgnoreDataMember]
-        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-
         [DataMember(Name = "display_name")]
         public string? DisplayName { get; set; }
 
@@ -152,11 +147,8 @@ public class Config : ITomlMetadataProvider
 
     [DataMember(Name = "install")]
     public InstallationConfig? Installation { get; set; }
-    public class InstallationConfig : ITomlMetadataProvider
+    public class InstallationConfig
     {
-        [IgnoreDataMember]
-        public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-
         /// <summary>
         /// Target installation directory. May contain environment variables like %ProgramFiles% or %LocalAppData%.
         /// </summary>
@@ -183,11 +175,8 @@ public class Config : ITomlMetadataProvider
         /// </summary>
         [DataMember(Name = "signing")]
         public SigningConfig? Signing { get; set; }
-        public class SigningConfig : ITomlMetadataProvider
+        public class SigningConfig
         {
-            [IgnoreDataMember]
-            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-
             /// <summary>
             /// Name of the PFX File or the certificate in the certificate store to use for signing.
             /// </summary>
@@ -245,11 +234,8 @@ public class Config : ITomlMetadataProvider
 
         [DataMember(Name = "env_vars")]
         public List<EnvVarConfig> EnvironmentVariables { get; } = [];
-        public class EnvVarConfig : ITomlMetadataProvider
+        public class EnvVarConfig
         {
-            [IgnoreDataMember]
-            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
-
             [DataMember(IsRequired = true, Name = "name")]
             public string Name { get; set; } = "";
 
@@ -268,10 +254,8 @@ public class Config : ITomlMetadataProvider
 
         [DataMember(Name = "shortcuts")]
         public List<ShortcutConfig> Shortcuts { get; } = [];
-        public class ShortcutConfig : ITomlMetadataProvider
+        public class ShortcutConfig
         {
-            [IgnoreDataMember]
-            public TomlPropertiesMetadata? PropertiesMetadata { get; set; }
 
             /// <summary>
             /// Files are searched by the end of their filename. So "app.exe" would match "myapp.exe".
@@ -294,13 +278,27 @@ public class Config : ITomlMetadataProvider
 
     public static Config? FromToml(string toml)
     {
-        bool success = Toml.TryToModel(toml, out Config? config, out _);
-        return success ? config : null;
+        TomlMetadataStore store = new();
+        TomlSerializerOptions options = new()
+        {
+            MetadataStore = store
+        }; ;
+
+        if (TomlSerializer.TryDeserialize(toml, out Config? config, options))
+        {
+            config.TomlMetadataStore = store;
+        }
+
+        return config;
     }
 
     public string ToToml()
     {
-        return Toml.FromModel(this);
+        TomlSerializerOptions options = new()
+        {
+            MetadataStore = TomlMetadataStore
+        };
+        return TomlSerializer.Serialize(this, options);
     }
 }
 
