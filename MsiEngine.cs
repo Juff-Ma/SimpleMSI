@@ -39,6 +39,8 @@ public class MsiEngine(PrintContext print = default)
         Compiler.SignAllFilesOptions.SkipSignedFiles = true;
         Compiler.VerboseOutput = enableVerbose;
 
+        WixGuid.Generator = GuidGenerators.CollisionFree;
+
         _configApplied = true;
     }
 
