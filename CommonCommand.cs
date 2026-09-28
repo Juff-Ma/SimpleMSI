@@ -22,10 +22,11 @@ internal abstract class CommonCommand : ICliRunAsyncWithContextAndReturn
     public SimpleMsiCli Root { get; set; } = null!;
     protected bool PrintLogo => !Root.NoLogo;
 
-    [CliOption(Description = "Version of the app", Required = false)]
+    [CliOption(Name = "version", Alias = "v", Description = "Version of the app", Required = false)]
     public Version? Version { get; set; }
 
-    [CliOption(Description = "Platform the installer should run on", Required = false,
+    [CliOption(Name = "platform", Alias = "p",
+        Description = "Platform the installer should run on", Required = false,
         AllowedValues = [
             "x86",
             "x64",
@@ -34,18 +35,22 @@ internal abstract class CommonCommand : ICliRunAsyncWithContextAndReturn
         ])]
     public string? Platform { get; set; }
 
-    [CliOption(Description = "Output file path", Required = false,
-        ValidationRules = CliValidationRules.LegalPath, Alias = "o")]
+    [CliOption(Name = "output-file", Alias = "o",
+        Description = "Output file path", Required = false,
+        ValidationRules = CliValidationRules.LegalPath)]
     public string? OutputFile { get; set; }
 
-    [CliOption(Description = "Source directories to include files from, can be provided multiple times",
-        Required = false, Name = "dir")]
+    [CliOption(Name = "dir", Alias = "d",
+        Description = "Source directories to include files from, can be provided multiple times",
+        Required = false)]
     public List<string> SourceDirectories { get; set; } = [];
 
-    [CliOption(Description = "Source files include, can be provided multiple times",
-        Required = false, Name = "file")]
+    [CliOption(Name = "file", Alias = "f",
+        Description = "Source files include, can be provided multiple times",
+        Required = false)]
     public List<string> SourceFiles { get; set; } = [];
 
-    [CliOption(Description = "Print extended output")]
+    [CliOption(Name = "verbose", Alias = "V",
+        Description = "Print extended output")]
     public bool Verbose { get; set; }
 }

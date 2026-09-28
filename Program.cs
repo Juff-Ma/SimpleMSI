@@ -39,7 +39,7 @@ namespace SimpleMSI
         public static readonly Assembly Assembly = typeof(Marker).Assembly;
         public static readonly int AssemblyMajor = Assembly.GetName().Version?.Major ?? 1;
 
-        [CliOption(Name = "nologo", Recursive = true, Description = "Do not display logo and copyright")]
+        [CliOption(Name = "nologo", Alias = "s", Recursive = true, Description = "Do not display logo and copyright")]
         public bool NoLogo { get; set; }
 
         public int Run(CliContext cliContext)

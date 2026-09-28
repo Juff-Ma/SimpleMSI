@@ -22,10 +22,12 @@ internal class InitCommand : CommonCommand
         Description = "Application identifying name")] 
     public string AppName { get; set; } = null!;
 
-    [CliOption(Description = "Application identifying GUID", Required = false)]
+    [CliOption(Name = "guid", Alias = "g",
+        Description = "Application identifying GUID", Required = false)]
     public Guid? Guid { get; set; }
 
-    [CliOption(Description = "Executable name used for default Shortcut", Required = false,
+    [CliOption(Name = "executable-name", Alias = "e",
+        Description = "Executable name used for default Shortcut", Required = false,
         ValidationRules = CliValidationRules.LegalFileName)]
     public string? ExecutableName { get; set; }
 

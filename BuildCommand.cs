@@ -20,20 +20,22 @@ namespace SimpleMSI;
 internal class BuildCommand : CommonCommand
 {
 
-    [CliOption(Description = "Path to configuration file", Required = false,
-        Name = "config", Alias = "c",
+    [CliOption(Name = "config", Alias = "c",
+        Description = "Path to configuration file", Required = false,
         ValidationRules = CliValidationRules.LegalPath | CliValidationRules.ExistingFile)]
     public string? ConfigFile { get; set; }
 
-    [CliOption(Description = "EXE/DLL File to grab Version from", Required = false,
-        Name = "grab-version-from-file",
+    [CliOption(Name = "grab-version-from-file", Alias = "F",
+        Description = "EXE/DLL File to grab Version from", Required = false,
         ValidationRules = CliValidationRules.LegalPath | CliValidationRules.ExistingFile)]
     public string? VersionFile { get; set; }
 
-    [CliOption(Description = "Name of the code signing certificate to use", Required = false)]
+    [CliOption(Name = "certificate-name", Alias = "C",
+        Description = "Name of the code signing certificate to use", Required = false)]
     public string? CertificateName { get; set; }
 
-    [CliOption(Description = "Password of the code signing certificate", Required = false)]
+    [CliOption(Name = "certificate-password", Alias = "P",
+        Description = "Password of the code signing certificate", Required = false)]
     public string? CertificatePassword { get; set; }
 
     public override async Task<int> RunAsync(CliContext cliContext)
