@@ -162,13 +162,13 @@ public class Config
         /// Single files to be included in the installation.
         /// </summary>
         [JsonPropertyName("source_files")]
-        public List<string> Files { get; } = [];
+        public List<string> Files { get; set; } = [];
 
         /// <summary>
         /// Directories to be included in the installation. Must contain a wildcard in the form of <c>*.*</c> as the filename/>
         /// </summary>
         [JsonPropertyName("source_dirs")]
-        public List<string> Dirs { get; } = [];
+        public List<string> Dirs { get; set;  } = [];
 
         [JsonPropertyName("source_dirs_are_recursive")]
         public bool? DirsRecursive { get; set; }
@@ -238,7 +238,7 @@ public class Config
         }
 
         [JsonPropertyName("env_vars")]
-        public List<EnvVarConfig> EnvironmentVariables { get; } = [];
+        public List<EnvVarConfig> EnvironmentVariables { get; set;} = [];
         public class EnvVarConfig
         {
             [JsonPropertyName("name")]
@@ -260,7 +260,7 @@ public class Config
         }
 
         [JsonPropertyName("shortcuts")]
-        public List<ShortcutConfig> Shortcuts { get; } = [];
+        public List<ShortcutConfig> Shortcuts { get; set;} = [];
         public class ShortcutConfig
         {
 

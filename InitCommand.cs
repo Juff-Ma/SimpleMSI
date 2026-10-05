@@ -82,7 +82,7 @@ internal class InitCommand : CommonCommand
         if (SourceFiles.Count > 0)
         {
             config.Installation!.Files.Clear();
-            config.Installation!.Files.AddRange(SourceDirectories);
+            config.Installation!.Files.AddRange(SourceFiles);
         }
 
         if (OutputFile is {} file &&

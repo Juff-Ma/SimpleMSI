@@ -138,7 +138,7 @@ internal class BuildCommand : CommonCommand
         if (SourceFiles.Count > 0)
         {
             config.Installation ??= new();
-            config.Installation.Files.AddRange(SourceDirectories);
+            config.Installation.Files.AddRange(SourceFiles);
         }
 
         if (OutputFile is { } file &&
