@@ -10,9 +10,23 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 */
 #endregion
+
 using DotMake.CommandLine;
 using SimpleMSI;
 using System.Reflection;
+
+#if DEBUG
+using System.Diagnostics;
+if (args.Contains("--debug"))
+{
+    while (!Debugger.IsAttached)
+    {
+        await Task.Delay(100);
+    }
+    Debugger.Break();
+}
+args = [.. args.Where(a => a != "--debug")];
+#endif
 
 return await Cli.RunAsync<SimpleMsiCli>(args, new()
 {
