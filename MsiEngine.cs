@@ -113,7 +113,16 @@ public class MsiEngine(PrintContext print = default)
                  throw new ArgumentException("UI Mode is not valid", nameof(config)),
 
             Description = config.Metadata?.Description ?? string.Empty,
-            MajorUpgrade = upgrade
+            MajorUpgrade = upgrade,
+            CustomIdAlgorithm =
+                entity =>
+                {
+                    if (entity is Dir)
+                    {
+                        return $"SIMPLEMSI_{WixEntity.IncrementalIdFor(entity)}";
+                    }
+                    return null;
+                }
         };
 
         _msi.ResolveWildCards();
